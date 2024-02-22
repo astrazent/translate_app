@@ -1,34 +1,71 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>How to create a website in HTML & CSS step by step</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="/css/home.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700,900|Roboto&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div class="topnav">
-        <a class="active" href="/">Home</a>
-        <a href="list">News</a>
+    <div class="header">
+        <div class="navbar">
+            <div class="logo">
+                <a href="#"><img src="img/logo.jpg" /></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>Trang chủ</li>
+                    <li>Về Chúng tôi</li>
+                    <li>Dịch thuật</li>
+                    <!-- <li>Service</li>
+                    <li>Blog</li>
+                    <li>Shop</li> -->
+                    <!-- <li>Contact</li> -->
+                </ul>
+            </div>
+            <div class="user">
+                <%if (status == 'LoggedIn'){ %>
+                    <a class="reg-btn" href="/logout">Log out</a>
+                <%} else{%>
+                    <a class="reg-btn" href="/login">Log in</a>
+                <%} %>
+                <%if (status == 'LoggedIn'){ %>
+                    <div class="circle">
+                        <img src="img/Animepic3.jpg" alt="Your Image">
+                    </div>
+                <%} else{%>
+                    <div class="circle">
+                        <img src="img/PICA.jpg" alt="Your Image">
+                    </div>
+                <%} %>
+            </div>
+        </div>
+
+        <div class="banner">
+            <div class="app-text">
+                <h3>Chào mừng đến với Infinity Translate</h3>
+                <h1>Nơi bạn thoả sức khám phá thế giới ngôn ngữ nhiều màu sắc</h1>
+                <p>Hãy cùng chúng tôi thoả mãn niềm đam mê dịch thuật trong bạn!</p>
+            </div>
+        </div>
+        <div class="social-icons">
+            <ul>
+                <li>
+                    <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div style="font-size: x-large; font-weight: 800;">Home Page</div>
-    <form action="/create-user" method="post">
-        <div class="input-group">
-            <label for="fname">First name:</label>
-            <input type="text" id="fname" name="fname"><br><br>
-        </div>
-        <div class="input-group">
-            <label for="lname">Last name:</label>
-            <input type="text" id="lname" name="lname"><br><br>
-        </div>
-        <div class="input-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address"><br><br>
-        </div>
-        <div class="input-group">
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city"><br><br>
-        </div>
-        <input type="submit" value="Submit">
-    </form>
 </body>
 </html>
