@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
 const registerSubmit = document.getElementById('registerSubmit');
+const loginSubmit = document.getElementById('loginSubmit');
 
 //alert
 let notifications = document.querySelector('.notifications');
@@ -45,6 +46,28 @@ registerSubmit.addEventListener('click', () => {
     })
 })
 
+loginSubmit.addEventListener('click', () => {
+    const login = {
+        loginEmail: loginEmail.value,
+        loginPassword: loginPassword.value
+    }
+    fetch("/api/check-login", {
+        method: "POST",
+        body: JSON.stringify(login),
+        headers: {
+            "Content-type": "application/json"
+        }
+    }).then(res => res.json()).then(data => {
+        if(data.status == "error"){
+            let a = 1;
+            let text = data.message;
+            error(text);
+        }
+        else{
+            window.location.href = "/";
+        }
+    })
+})
 
 
 //alert

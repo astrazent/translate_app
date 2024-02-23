@@ -92,11 +92,27 @@ const loginCheckPage = async (req, res) => {
                 expiresIn: new Date(Date.now() + process.env.COOKIES_EXPIRE * 24 * 60 * 60 * 100),
             }
             res.cookie("userRegistered", token, cookiesOptions);
-            return res.redirect("/");
+            return res.json({status: "success", message: "Login success!"});
         }
     }
 }
+const aboutPage = (req, res) => {
+    if(req.user){
+        return res.render('about.ejs', {status:"LoggedIn", user: req.user}); 
+    }
+    else{
+        return res.render('about.ejs', {status:"LoggedOut"})
+    }
+}
 
+const translatePage = (req, res) => {
+    if(req.user){
+        return res.render('translate.ejs', {status:"LoggedIn", user: req.user}); 
+    }
+    else{
+        return res.render('translate.ejs', {status:"LoggedOut"})
+    }
+}
 module.exports = {
-    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage // export object
+    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage, aboutPage, translatePage // export object
 }
