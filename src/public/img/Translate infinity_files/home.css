@@ -1,0 +1,249 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+
+.circle {
+    width: 70px;
+    height: 70px;
+    background-color: #f00; /* Màu nền */
+    border-radius: 50%; /* Đảm bảo nó là một hình tròn */
+    overflow: hidden; /* Ẩn nội dung vượt ra ngoài */
+    display: flex; /* Sử dụng flexbox */
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+.circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fit hình ảnh toàn bộ vào div */
+}
+
+.user{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu2 li a {
+    color: #fff; /* Màu chữ mặc định */
+    font-size: larger;
+    text-decoration: none; /* Loại bỏ gạch chân mặc định */
+    transition: color 0.3s ease; /* Thêm hiệu ứng chuyển đổi cho màu chữ */
+}
+
+.menu2 li a:hover {
+    color: #f00; /* Màu chữ khi hover */
+}
+
+.menu li a.active {
+    color: #f00; /* Màu chữ khi active */
+}
+
+.header{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.header:before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    z-index: 1;
+    background-color: #000;
+}
+
+
+.header .navbar{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    padding-top: 60px;
+}
+
+
+.logo img{
+    display: block;
+    max-width: 30%;
+    margin-left: 50px;
+}
+
+
+.menu ul li{
+    color:#fff;
+    display: inline-block;
+    margin-right: 35px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 800;
+    align-items: center;
+    letter-spacing: 1px;
+}
+
+.reg-btn{
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    background-color: #f31616;
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px 25px;
+    margin-right: 1px;
+    letter-spacing: 1px;
+}
+
+.banner{
+    position: absolute;
+    top: 19%;
+    left: 0;
+    color: #fff;
+    z-index: 2;
+}
+
+.app-text{
+    width: 60%;
+    padding-left: 50px;
+}
+
+.app-text h3{
+    margin-top: 100px;
+    font-size: 25px;
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.app-text h1{
+    font-size: 80px;
+    position: relative;
+    color: #fff;
+    margin-top: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+    font-family: 'Playfair Display', serif;
+}
+
+.app-text p{
+    font-size: 19px;
+    margin: 30px 30px 30px 0;
+    letter-spacing: 1px;
+    color: #fff;
+    padding-right: 250px;
+    line-height: 1.5;
+    letter-spacing: 3px;
+}
+
+.btn-group{
+    display: flex;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+.learn-more-btn{
+    cursor: pointer;
+    display: block;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #fff;
+    padding: 15px 20px;
+    letter-spacing: 1px;
+    transition: all 0.5s;
+}
+
+.learn-more-btn:hover{
+    background: red;
+    color: #fff;
+}
+
+.play-btn{
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-group span{
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin: auto 20px;
+    cursor: pointer;
+}
+
+.play-btn-inner{
+    height: 55px;
+    width: 55px; 
+}
+
+.play-btn-inner i{
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 17px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.3); 
+    transition: all 0.5s;
+}
+
+.play-btn-inner i:hover{
+    background: red;
+    color: #fff;
+}
+
+.social-icons{
+    position: absolute;
+    right: 50px;
+    top: 35%;
+    z-index: 2;  
+}
+ 
+.social-icons ul li{
+    margin-top: 25px;
+    text-align: center;
+}
+
+.social-icons ul li a{
+    display: block;
+    color: #fff;
+    padding: 14px 16px;
+    font-size: 25px;
+    font-weight: 700;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.social-icons ul li a:hover{
+    background: rgb(255, 0, 0);
+    color: #fff;
+}
+
+
