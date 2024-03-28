@@ -25,7 +25,120 @@ body{
   background-repeat: no-repeat;
 }
 
+.button{
+  /* color: #fff; */
 
+  /* font-size: 50px;
+  position: absolute;
+  top: 60%;
+  left: 12%; */
+}
+
+/*******/
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #333;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 15; /* Set a higher z-index to ensure the sidebar appears above other elements */
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+
+.toggle-btn {
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+.toggle-btn2 {
+  z-index: 100;
+  position: absolute;
+  top: 70%;
+  left: 20%;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.overlay{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+/*************************************/
+/*****CSS cho menu item******/
+.product {
+  position: relative;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+}
+
+.product h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.product p {
+  margin: 10px 0;
+  color: aqua;
+}
+
+.product .price {
+  font-weight: bold;
+  color: rgb(6, 219, 6);
+}
+
+.text-box{
+  position: relative;
+}
+
+.text-box-close{
+  cursor: pointer;
+  position: absolute;
+  right: 580px;
+  top: 20px;
+  color: red;
+}
+
+/**************************/
 .container{
     position: absolute;
     top: 80%; /* Căn phần trên của div content tới 50% của container */
@@ -36,7 +149,7 @@ body{
     width: 100%;
     padding: 30px;
     border-radius: 7px;
-    z-index: 2000;
+    z-index: 5;
 }
 .wrapper{
   border-radius: 5px;
@@ -58,7 +171,7 @@ body{
   resize: none;
   /* background: none; */
   font-size: 18px;
-  padding: 10px 15px;
+  padding: 10px 50px 10px 15px;
   border-radius: 5px;
   background-color: #fff;
 }
@@ -129,7 +242,7 @@ body{
 .controls i:active{
   transform: scale(0.9);
 }
-.container button{
+.container .translateBtn{
   width: 100%;
   padding: 14px;
   outline: none;
@@ -159,7 +272,7 @@ body{
   .controls .row .icons{
     display: none;
   }
-  .container button{
+  .container .translateBtn{
     padding: 13px;
     font-size: 16px;
   }
@@ -272,7 +385,7 @@ body{
 
 .banner{
     position: absolute;
-    top: 15%; /* Căn phần trên của thẻ h3 tới 50% của container */
+    top: 22%; /* Căn phần trên của thẻ h3 tới 50% của container */
     left: 50%; /* Căn phần trái của thẻ h3 tới 50% của container */
     transform: translate(-50%, -50%); /* Di chuyển thẻ h3 lùi lại 50% của chính nó theo cả chiều ngang và chiều dọc */
     color: #fff;
@@ -285,7 +398,7 @@ body{
 }
 
 .app-text h3{
-    margin-top: 100px;
+    /* margin-top: 100px; */
     font-size: 40px;
     color: #fff;
     font-weight: 900;

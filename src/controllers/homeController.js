@@ -89,7 +89,8 @@ const loginCheckPage = async (req, res) => {
                 expiresIn: process.env.JWT_EXPIRE
             })
             const cookiesOptions = {
-                expiresIn: new Date(Date.now() + process.env.COOKIES_EXPIRE * 24 * 60 * 60 * 100),
+                expires: new Date(Date.now() + process.env.COOKIES_EXPIRE * 86400 * 1000),
+                httpOnly: true
             }
             res.cookie("userRegistered", token, cookiesOptions);
             return res.json({status: "success", message: "Login success!"});
@@ -113,6 +114,58 @@ const translatePage = (req, res) => {
         return res.render('translate.ejs', {status:"LoggedOut"})
     }
 }
+
+const translateHistory = async (req, res) => {
+    let {translateFrom, translateToText, languageFrom, languageTo} = req.body;
+    const [results, fields] = await connection.query(
+        `INSERT INTO 
+        TranslateHistory (FavoriteId, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo) 
+        VALUES (?, ?, ?, ?, ?)`, ['0', languageFrom, languageTo, translateFrom, translateToText]
+        );
+        return res.json({status: 'success', message: 'Save success'})  
+}
+
+const translateList = async (req, res) => {
+    let [results, fields] = await connection.query(`SELECT * FROM TranslateHistory`);
+    if(!results.length) return res.json({})
+    return res.json(results) 
+}
+
+const translateUpdateKey = async (req, res) => {
+    let {check, id} = req.body
+    if(check){
+        //cập nhật trạng thái favorite của từ
+        await connection.query(`INSERT INTO TranslateFavorite (History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo)
+        SELECT History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo
+        FROM TranslateHistory
+        WHERE History_id = ?`, [id])
+        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '1' WHERE History_id = ?`, [id])
+    }
+    else{
+        await connection.query(`DELETE FROM TranslateFavorite WHERE History_id = ?`, [id]);
+        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '0' WHERE History_id = ?`, [id]);
+    }
+    return res.json({status: 'success', message: 'Update success'}) 
+}
+
+const favoriteList = async (req, res) => {
+    let [results, fields] = await connection.query(`SELECT * FROM TranslateFavorite`);
+    return res.json(results) 
+}
+
+const translateDeleteKey = async (req, res) => {
+    let {id} = req.body;
+    await connection.query(`DELETE FROM TranslateHistory WHERE History_id = ?`, [id]);
+    return res.json({status: 'success', message: 'Delete history list success'}) 
+}
+
+const DeleteFavoriteKey = async (req, res) => {
+    let {favorId, hisId} = req.body;
+    await connection.query(`DELETE FROM TranslateFavorite WHERE Favorite_id = ?`, [favorId]);
+    if(hisId){
+        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '0' WHERE History_id = ?`, [hisId]);
+    }
+}
 module.exports = {
-    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage, aboutPage, translatePage // export object
+    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage, aboutPage, translatePage, translateHistory, translateList, translateUpdateKey, favoriteList, translateDeleteKey, DeleteFavoriteKey // export object
 }

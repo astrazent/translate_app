@@ -37,6 +37,18 @@
                     </div>
                     <%} %>
                 </div>
+
+                <!-- <div class="box">
+                    <button class="toggle-btn" onclick="toggleSidebar()">☰ Open Sidebar</button>
+                    <div class="sidebar">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div> -->
             </div>
 
             <div class="banner">
@@ -45,17 +57,35 @@
                 </div>
             </div>
 
+            <div class="box">
+                <button class="toggle-btn">History</button>
+                <div class="sidebar">
+                    <div id="product-list-container">
+                    </div>
+                </div>
+            </div>
+            <div class="box1">
+                <button class="toggle-btn2">Favorite</button>
+                <div class="sidebar">
+                    <div id="product-list-container-favor">
+                    </div>
+                </div>
+            </div>
+
             <div class="container">
                 <div class="wrapper">
-                    <div class="text-input">
-                        <textarea spellcheck="false" class="from-text" placeholder="Enter text"></textarea>
-                        <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translation"></textarea>
+                    <div class="text-box">
+                        <div class="text-input">
+                            <textarea spellcheck="false" class="from-text" placeholder="Enter text" ></textarea>
+                            <textarea spellcheck="false"  disabled class="to-text" placeholder="Translation"></textarea>
+                        </div>
                     </div>
                     <ul class="controls">
                         <li class="row from">
                             <div class="icons">
                                 <i id="from" class="fas fa-volume-up"></i>
                                 <i id="from" class="fas fa-copy"></i>
+                                <i class="fa-solid fa-microphone"></i>
                             </div>
                             <select></select>
                         </li>
@@ -69,10 +99,11 @@
                         </li>
                     </ul>
                 </div>
-                <button>Translate Text</button>
+                <button class="translateBtn">Translate Text</button>
             </div>
         </div>
-
+        <div class="overlay"></div>
+        <script src="https://kit.fontawesome.com/f34da6635c.js" crossorigin="anonymous"></script>
         <script src="/js/countries.js"></script>
         <script src="/js/script.js"></script>
     </body>

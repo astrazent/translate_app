@@ -1,43 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Translate infinity</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/css/home.css" >
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700,900|Roboto&display=swap" rel="stylesheet" />
-</head>
-<body>
-    <div class="header">
-        <div class="navbar">
-            <div class="logo">
-                <a href="#"><img src="/img/logo.jpg" /></a>
-            </div>
-            <div class="menu">
-                <ul class="menu2">
-                    <li><a href="/">Trang chủ</a></li>
-                    <li><a href="/translate">Dịch thuật</a></li>
-                    <li><a class="active">Về Chúng tôi</a></li>
-                </ul>
-            </div>
-            <div class="user">
-                <%if (status == 'LoggedIn'){ %>
+    <head>
+        <title>Translate infinity</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="/css/home.css" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700,900|Roboto&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="header">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="#"><img src="/img/logo.jpg" /></a>
+                </div>
+                <div class="menu">
+                    <ul class="menu2">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/translate">Dịch thuật</a></li>
+                        <li><a class="active">Về Chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="user">
+                    <%if (status == 'LoggedIn'){ %>
                     <a class="reg-btn" href="/logout">Log out</a>
-                <%} else{%>
+                    <%} else{%>
                     <a class="reg-btn" href="/login">Log in</a>
-                <%} %>
-                <%if (status == 'LoggedIn'){ %>
+                    <%} %> <%if (status == 'LoggedIn'){ %>
                     <div class="circle">
-                        <img src="img/Animepic3.jpg" alt="Your Image">
+                        <img src="img/Animepic3.jpg" alt="Your Image" />
                     </div>
-                <%} else{%>
+                    <%} else{%>
                     <div class="circle">
-                        <img src="img/PICA.jpg" alt="Your Image">
+                        <img src="img/PICA.jpg" alt="Your Image" />
                     </div>
-                <%} %>
+                    <%} %>
+                </div>
+            </div>
+            <div class="flashcard-container">
+                <div class="flashcard">
+                    <div class="question">
+                        <div class="content">What is the official birthday of the USAF?</div>
+                    </div>
+                    <div class="answer">
+                        <div class="content">September 18, 1947</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
