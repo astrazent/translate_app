@@ -10,13 +10,57 @@ var productListContainer = document.getElementById("product-list-container");
 var productListContainerFavor = document.getElementById("product-list-container-favor");
 
 //đóng mở sidebar
-var togglebtn = document.querySelector('.toggle-btn');
+var togglebtn = document.querySelector('.toggle-btn1');
 var togglebtn2 = document.querySelector('.toggle-btn2');
-var box = document.querySelector('.box');
-var box1 = document.querySelector('.box1');
-var sidebar = box.querySelector('.sidebar');
-var sidebar1 = box1.querySelector('.sidebar');
+var box = document.querySelector('.box1');
+var box1 = document.querySelector('.box2');
+var sidebar = document.querySelector('.sidebar1');
+var sidebar1 = document.querySelector('.sidebar2');
 
+
+
+
+/*=============== SHOW MENU ===============*/
+const navMenu = document.getElementById('nav-menu'),
+    navToggle = document.getElementById('nav-toggle'),
+    navClose = document.getElementById('nav-close'),
+    header = document.getElementById('header')
+
+/*===== MENU SHOW =====*/
+/* Validate if constant exists */
+if(navToggle){
+    navToggle.addEventListener('click', () =>{
+        navMenu.classList.add('show-menu')
+    })
+}
+
+/*===== MENU HIDDEN =====*/
+/* Validate if constant exists */
+if(navClose){
+    navClose.addEventListener('click', () =>{
+        navMenu.classList.remove('show-menu')
+    })
+}
+
+/*=============== REMOVE MENU MOBILE ===============*/
+const navLink = document.querySelectorAll('.nav__link')
+
+function linkAction(){
+    const navMenu = document.getElementById('nav-menu')
+    // When we click on each nav__link, we remove the show-menu class
+    navMenu.classList.remove('show-menu')
+}
+navLink.forEach(n => n.addEventListener('click', linkAction))
+
+
+/*=============== CHANGE BACKGROUND HEADER ===============*/
+function scrollHeader(){
+    // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
+    if(this.scrollY >= 50) header.classList.add('scroll-header'); else header.classList.remove('scroll-header')
+}
+window.addEventListener('scroll', scrollHeader)
+
+// ==================== Translate =================================
 selectTag.forEach((tag, id) => {
     for (let country_code in countries) {
         let selected = id == 0 ? country_code == "en-GB" ? "selected" : "" : country_code == "vi-VN" ? "selected" : "";
@@ -55,12 +99,22 @@ fromText.addEventListener("keydown", async (event) => {
     // }
 })
 
+//sự kiện delete text
 var textBox = document.querySelector(".text-box");
+var width_box = textBox.offsetWidth;
 var product = document.createElement("i");
+width_box = textBox.offsetWidth;
+product.style.left = (width_box / 2 - 40).toString() + 'px';
 product.classList.add("fa-solid", "text-box-close", "fa-xmark", "fa-xl");
+
 product.style.display = "none";
 textBox.appendChild(product);
 
+window.addEventListener('resize', function(event) {
+    width_box = textBox.offsetWidth;
+    product.style.left = (width_box / 2 - 40).toString() + 'px';
+});
+ 
 fromText.addEventListener('keydown', () => {
     setTimeout(() => {
         var value = fromText.value;
@@ -355,23 +409,26 @@ const item = (data) => {
     data.reverse().forEach((list) => {
         //Tạo icon heart
         var heartIcon = document.createElement('i');
-        heartIcon.classList.add('fa-regular', 'fa-heart', 'fa-lg'); // Sử dụng lớp của Font Awesome cho biểu tượng trái tim
+        heartIcon.classList.add('fa-regular', 'fa-heart'); // Sử dụng lớp của Font Awesome cho biểu tượng trái tim
+        heartIcon.style.fontSize = "20px"
         if(list.FavoriteId === '1'){
             heartIcon.classList.toggle('fa-solid');
         }
+        heartIcon.style.color = 'white';
         heartIcon.style.marginLeft = '70px'; // Thêm khoảng cách nếu cần
         heartIcon.style.position = 'absolute';
         heartIcon.style.right = '40px';
-        heartIcon.style.top = '20px';
+        heartIcon.style.top = '12px';
         heartIcon.style.cursor = 'pointer';
         heartIcon.id = list.History_id;
 
         //Tạo nút delete
         // <i class="fa-solid fa-x" style="color: #ff3d5a;"></i>
         var deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('fa-solid', 'fa-x', 'fa-lg');
+        deleteIcon.classList.add('fa-solid', 'fa-x');
+        deleteIcon.style.fontSize = "18px"
         deleteIcon.style.position = 'absolute';
-        deleteIcon.style.top = '20px';
+        deleteIcon.style.top = '13px';
         deleteIcon.style.right = '10px';
         deleteIcon.style.cursor = 'pointer';
         deleteIcon.style.color = '#ff3d5a';
@@ -379,15 +436,17 @@ const item = (data) => {
 
         //Tạo nút sound
         var soundIcon = document.createElement('i');
-        soundIcon.classList.add('fa-solid', 'fa-volume-low', 'fa-lg');
+        soundIcon.classList.add('fa-solid', 'fa-volume-low');
+        soundIcon.style.fontSize = '1em';
         soundIcon.style.marginLeft = '10px';
         soundIcon.style.cursor = 'pointer';
         soundIcon.style.color = '#ffd43b';
         soundIcon.setAttribute("text", list.TranslateFrom);
         soundIcon.setAttribute("language", list.LanguageFrom);
         var soundIcon2 = document.createElement('i');
-        soundIcon2.classList.add('fa-solid', 'fa-volume-low', 'fa-lg');
-        soundIcon2.style.marginLeft = '0px';
+        soundIcon2.classList.add('fa-solid', 'fa-volume-low');
+        soundIcon.style.fontSize = '1em';
+        soundIcon2.style.marginLeft = '10px';
         soundIcon2.style.cursor = 'pointer';
         soundIcon2.style.color = '#ffd43b';
         soundIcon2.setAttribute("text", list.TranslateTo);
@@ -395,13 +454,15 @@ const item = (data) => {
         
         //Tạo nút copy
         var copy = document.createElement('i');
-        copy.classList.add('fa-solid', 'fa-copy', 'fa-lg');
-        copy.style.marginLeft = '15px';
+        copy.classList.add('fa-solid', 'fa-copy');
+        copy.style.fontSize = '1em';
+        copy.style.marginLeft = '10px';
         copy.style.cursor = 'pointer';
         copy.style.color = '#ffd43b';
         copy.setAttribute("text", list.TranslateFrom);
         var copy2 = document.createElement('i');
-        copy2.classList.add('fa-solid', 'fa-copy', 'fa-lg');
+        copy2.classList.add('fa-solid', 'fa-copy');
+        copy2.style.fontSize = '1em';
         copy2.style.marginLeft = '15px';
         copy2.style.cursor = 'pointer';
         copy2.style.color = '#ffd43b';
@@ -413,7 +474,7 @@ const item = (data) => {
         box.appendChild(soundIcon)
         box.appendChild(copy)
         var box2 = document.createElement("div");
-        box2.style.marginTop = '5px'
+        box2.style.marginTop = '10px'
         box2.appendChild(soundIcon2)
         box2.appendChild(copy2)
 
@@ -421,7 +482,7 @@ const item = (data) => {
         var productDiv = document.createElement("div");
         productDiv.classList.add("product");
         var productName = document.createElement("h3");
-        productName.textContent = list.LanguageFrom + '-->' + list.LanguageTo;
+        productName.textContent = list.LanguageFrom +  ' ⭢ ' + list.LanguageTo;
         productName.appendChild(heartIcon);
         productName.appendChild(deleteIcon);
         
@@ -517,9 +578,10 @@ const itemFavor = (data) => {
 
         //Tạo nút delete
         var deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('fa-solid', 'fa-x', 'fa-lg');
+        deleteIcon.classList.add('fa-solid', 'fa-x');
+        deleteIcon.style.fontSize = '18px';
         deleteIcon.style.position = 'absolute';
-        deleteIcon.style.top = '20px';
+        deleteIcon.style.top = '13px';
         deleteIcon.style.right = '10px';
         deleteIcon.style.cursor = 'pointer';
         deleteIcon.style.color = '#ff3d5a';

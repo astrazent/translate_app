@@ -1,0 +1,74 @@
+:root{
+    --background-color: rgb(251, 255, 0);
+    --padding-carousel: 40px;
+}
+
+@keyframes slide {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.logo-banner{
+    padding: var(--padding-carousel) 0;
+    background-color: var(--background-color);
+}
+.logo-text{
+    text-align: center;
+    color: #131417;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.logos {
+    overflow: hidden;
+    padding-top: 50px;
+    white-space: nowrap;
+    position: relative;
+}
+
+.logos:before,
+.logos:after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+
+.logos:before {
+    left: 0;
+    /* background: linear-gradient(to left, rgba(255, 255, 255, 0), white); */
+}
+
+.logos:after {
+    right: 0;
+    /* background: linear-gradient(to right, rgba(255, 255, 255, 0), white); */
+}
+
+.logos:hover .logos-slide {
+    animation-play-state: paused;
+}
+
+.logos-slide {
+    display: inline-block;
+    animation: 35s slide infinite linear;
+}
+
+.logos-slide img {
+    height: 20px;
+    margin: 0 20px;
+}
+
+@media screen and (max-width: 1436px){
+    :root{
+    --padding-carousel: 22px;
+    }
+    .logos{
+        padding-top: 22px;
+    }
+}

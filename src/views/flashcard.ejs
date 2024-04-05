@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="/img/infinity.png" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="/css/translate.css" />
+        <link rel="stylesheet" type="text/css" href="/css/flashcard.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -28,7 +28,7 @@
                         </li>
 
                         <li class="nav__item">
-                            <a href="/flashcard" class="nav__link">flashcard</a>
+                            <a href="#trick" class="nav__link">flashcard</a>
                         </li>
 
                         <li class="nav__item">
@@ -64,12 +64,22 @@
                 </div>
             </nav>
         </header>
+
         <main class="wrap_content">
+            <div class="sidebar sidebar1">
+                <h2 class="sidebar_title"><i class="ri-history-line header_icon" style="color:#4255FF"></i>
+                    Add</h2>
+                <div id="product-list-container"></div>
+            </div>
+            <div class="sidebar sidebar2">
+                <h2 class="sidebar_title"><i class="ri-heart-fill header_icon" style="color: #4255FF"></i>
+                    Favorite</h2>
+                <div id="product-list-container-favor"></div>
+            </div>
             <div class="btn_group">
                 <div class="box box1">
                     <button class="toggle-btn toggle-btn1"><i class="ri-history-line header_icon" style="color:#4255FF; margin-right: 10px"></i>
-                        History
-                        <div class="test_color"></div>
+                        Add
                     </button>
                 </div>
                 <div class="box box2">
@@ -79,48 +89,63 @@
                     </button>
                 </div>
             </div>
-
-            <div class="sidebar sidebar1">
-                <h2 class="sidebar_title"><i class="ri-history-line header_icon" style="color:#4255FF"></i>
-                    History</h2>
-                <div id="product-list-container"></div>
-            </div>
-            <div class="sidebar sidebar2">
-                <h2 class="sidebar_title"><i class="ri-heart-fill header_icon" style="color: #4255FF"></i>
-                    Favorite</h2>
-                <div id="product-list-container-favor"></div>
-            </div>
-
-            <div class="container">
-                <div class="wrapper">
-                    <div class="text-box">
-                        <div class="text-input">
-                            <textarea spellcheck="false" class="from-text" placeholder="Enter text" ></textarea>
-                            <textarea spellcheck="false"  disabled class="to-text" placeholder="Translation"></textarea>
+        
+        <!-- =============== POP UP =================== -->
+        <div class="popup_overlay">
+        </div>
+            <div class="popup_add">
+                <div class="popup_content-sticky">
+                    <h2>Tạo học phần mới</h2>
+                    <button>Tạo</button>
+                </div>
+                <div class="popup_content">
+                    <h1 style="font-size: 30px; text-align: center;">Tạo học phần mới</h1>
+                    <div class="termName">
+                        <h3 class="termTitle">Tiêu đề</h3>
+                        <input type="text" class ="termInput" placeholder="Nhập tên học phần">
+                        <div class="popup_border"></div>
+                    </div>
+                    <div class="termDefWrap">
+                        <div class="termDef">
+                            <div class="termDef_header">
+                                <h3 class="termDef_header-content">1</h3>
+                                <i class="ri-delete-bin-7-line deleteTerm" style="font-size: 24px; cursor: pointer;"></i>
+                            </div>
+                            <div class="termDef_content">
+                                <div class="termDef_TN">
+                                    <input type="text" class ="termTN">
+                                    <p class="termTN_title">Thuật ngữ</p>
+                                </div>
+                                <div class="termDef_DN">
+                                    <input type="text" class ="termDN">
+                                    <p class="termDN_title">Định nghĩa</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="popup_more">
+                        <h3>+ Thêm thẻ</h3>
+                    </div>
+                    <button>Tạo</button>
                 </div>
-                <ul class="controls">
-                    <li class="row from">
-                        <div class="icons">
-                            <i id="from" class="fas fa-volume-up"></i>
-                            <i id="from" class="fas fa-copy"></i>
-                            <i class="fa-solid fa-microphone"></i>
-                        </div>
-                        <select></select>
-                    </li>
-                    <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
-                    <li class="row to">
-                        <select></select>
-                        <div class="icons">
-                            <i id="to" class="fas fa-volume-up"></i>
-                            <i id="to" class="fas fa-copy"></i>
-                            <i class="fas fa-copy" style="visibility: hidden;"></i>
-                        </div>
-                    </li>
-                </ul>
-                <button class="translateBtn">Translate Text</button>
+                <div class="popup_close">
+                    <i class='bx bx-x' style="color: #4255FF; font-size: 40px;"></i>
+                </div>
             </div>
+    
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="flip-card_content">
+                        Divulge
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    v. To tell; to reveal (as a secret)
+                </div>
+            </div>
+
         </main>
             <div class="footer-list">
                 <footer class="footer section">
@@ -204,7 +229,6 @@
         </div>
         <div class="overlay"></div>
         <script src="https://kit.fontawesome.com/f34da6635c.js" crossorigin="anonymous"></script>
-        <script src="/js/countries.js"></script>
-        <script src="/js/script.js"></script>
+        <script src="/js/flashcard.js"></script>
     </body>
 </html>

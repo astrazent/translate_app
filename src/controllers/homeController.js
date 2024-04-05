@@ -5,10 +5,10 @@ require('dotenv').config();
 
 const getHomePage = (req, res) => {
     if(req.user){
-        return res.render('home.ejs', {status:"LoggedIn", user: req.user}); 
+        return res.render('home_main.ejs', {status:"LoggedIn", user: req.user}); 
     }
     else{
-        return res.render('home.ejs', {status:"LoggedOut"})
+        return res.render('home_main.ejs', {status:"LoggedOut"})
     }
 }
 
@@ -55,7 +55,7 @@ const test = async (req, res) => {
 }
 
 const loginPage = (req, res) => {
-    return res.render('login.ejs');
+    return res.render('login_main.ejs');
 }
 
 const registerPage =  async (req, res) => {
@@ -111,8 +111,14 @@ const translatePage = (req, res) => {
         return res.render('translate.ejs', {status:"LoggedIn", user: req.user}); 
     }
     else{
-        return res.render('translate.ejs', {status:"LoggedOut"})
+        return res.render('login_main.ejs');
     }
+    // if(req.user){
+    //     return res.render('translate.ejs', {status:"LoggedIn", user: req.user}); 
+    // }
+    // else{
+    //     return res.render('translate.ejs', {status:"LoggedOut"})
+    // }
 }
 
 const translateHistory = async (req, res) => {
@@ -166,6 +172,15 @@ const DeleteFavoriteKey = async (req, res) => {
         await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '0' WHERE History_id = ?`, [hisId]);
     }
 }
+
+const flashcardPage = (req, res) => {
+    if(req.user){
+        return res.render('flashcard.ejs', {status:"LoggedIn", user: req.user}); 
+    }
+    else{
+        return res.render('login_main.ejs');
+    }
+}
 module.exports = {
-    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage, aboutPage, translatePage, translateHistory, translateList, translateUpdateKey, favoriteList, translateDeleteKey, DeleteFavoriteKey // export object
+    getHomePage, listUser, postCreateUser, getUpdateUser, postUpdateUser, test, loginPage, registerPage, loginCheckPage, aboutPage, translatePage, translateHistory, translateList, translateUpdateKey, favoriteList, translateDeleteKey, DeleteFavoriteKey, flashcardPage // export object
 }

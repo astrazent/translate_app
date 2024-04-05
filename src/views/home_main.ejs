@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== FAVICON ===============-->
+        <link rel="shortcut icon" href="/img/infinity.png" type="image/x-icon">
+
+        <!--=============== BOXICONS ===============-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+        <!--=============== SWIPER CSS ===============--> 
+        <link rel="stylesheet" href="/css/swiper-bundle.min.css">
+
+        <!--=============== CSS ===============--> 
+        <link rel="stylesheet" href="/css/styles.css">
+
+        <!-- ===================== CAROUSEL ================= -->
+        <link rel="stylesheet" href="/css/logos.css">
+
+        <!-- ================ CHANGE BACKGROUND COLOR ============= -->
+        <link rel="stylesheet" href="/css/changeColor.css">
+
+        <!-- =================== REMIXICON ================== -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+
+        <title>Infinity</title>
+    </head>
+    <body>
+        <!--==================== HEADER ====================-->
+        <header class="header" id="header">
+            <nav class="nav container">
+                <a href="#" class="nav__logo">
+                    <img src="/img/infinity.png" class="nav__logo-img"> 
+                    <span class="logo-header_text">infinity</span>
+                </a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="#home" class="nav__link active-link">Home</a>
+                        </li>
+
+                        <li class="nav__item">
+                            <a href="/translate" class="nav__link">Translate</a>
+                        </li>
+
+                        <li class="nav__item">
+                            <a href="#trick" class="nav__link">flashcard</a>
+                        </li>
+
+                        <li class="nav__item">
+                            <a href="#new" class="nav__link">Docs</a>
+                        </li>
+                        
+                        <a href="#support" class="nav__link">Support</a>
+                    </ul>
+
+                    <div class="nav__close" id="nav-close">
+                        <i class='bx bx-x'></i>
+                    </div>
+
+                    <img src="/img/nav-img.png" alt="" class="nav__img">
+                </div>
+
+                <div class="nav__toggle" style="cursor: pointer;" id="nav-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+
+                <div class="user">
+                    <%if (status == 'LoggedIn'){ %>
+                        <div class="circle">
+                            <img src="img/Animepic3.jpg" alt="Your Image">
+                        </div>
+                    <%} else{%>
+                        <a href="/login">
+                            <div class="nav__login">
+                                <i class="fa-solid fa-arrow-right-to-bracket fa-lg"></i>
+                            </div>
+                        </a>
+                    <%} %>
+                </div>
+            </nav>
+        </header>
+
+        <div class="image-video">
+            <video class="video" autoplay loop muted playsinline>
+                <source src="/stuff/video-sky.mp4" type="video/mp4">
+            </video>
+            <div class="video_text">
+                <p class="hoverText">Take the hassle out of languages in your <span class="video_animation">life.</span></p>
+                <div class="video_btn">
+                    <a href="#" class="btn_video btn_video1">Explore more</a>
+                    <a href="#" class="btn_video btn_video2">Log in</a>
+                </div>
+            </div>
+            <button id="play_button">
+                <i id="play_icon" class="ri-pause-line"></i>
+                <span class="play_text">Pause video</span>
+            </button>
+        </div>
+
+        <div class="container-box color-yellow">
+            <div class="container-box1">
+                <div class="panel box1" data-color ="yellow">
+                    <div class="item item1">
+                        <h1 class="item1-title">One-click translate instanly</h1>
+                    </div>
+                    <div class="item item2">
+                        <p class="item2-content" style="display: inline-block;">Instant translation with just a single click. Maintain efficiency in work and smoothness in all processes.</p>
+                        <a class="btn-design">Explore translate</a>
+                    </div>
+                    <div class="item item3">
+                        <img src="/img/yellow.gif" alt="" class="item3-img" style="display: inline-block;">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="container-box2">
+                <div class="panel box2" data-color="violet">
+                    <div class="box2-item box2-item1">
+                        <h1 class="box2-item1_title">Save words you like</h1>
+                    </div>
+                    <div class="box2-item box2-item2">
+                        <p class="box2-item2_content" style="display: inline-block">Save your favorite words to your list to actively review anytime, anywhere without interruption.</p>
+                        <a class="btn-design">Explore favorite word</a>
+                    </div>
+                    <div class="box2-item box2-item3">
+                        <img src="/img/purple.gif" alt="" class="box2-item3_img" style="display: inline-block">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-box3">
+                <div class="panel box3" data-color="red">
+                    <div class="box3-item box3-item1">
+                        <h1 class="box3-item1_title">Learn the world with flashcard.</h1>
+                    </div>
+                    <div class="box3-item box3-item2">
+                        <p class="box3-item2_content" style="display: inline-block">Using vocabulary memorization methods verified by experts and students from all over the world.</p>
+                        <a class="btn-design">Explore flashcard</a>
+                    </div>
+                    <div class="box3-item box3-item3">
+                        <img src="/img/red.gif" alt="" class="box3-item3_img" style="display: inline-block">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-box4">
+                <div class="panel box4" data-color="green">
+                    <div class="box4-item box4-item1">
+                        <h1 class="box4-item1_title">Responsive and more</h1>
+                    </div>
+                    <div class="box4-item box4-item2">
+                        <p class="box4-item2_content" style="display: inline-block">Using on many different devices makes it more convenient during use. Explore more features with infinity translate now.</p>
+                        <a class="btn-design">Explore more</a>
+                    </div>
+                    <div class="box4-item box4-item3">
+                        <img src="/img/green.gif" alt="" class="box4-item3_img" style="display: inline-block">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-box5">
+                <div class="panel box5" data-color="dark">
+                    <img src="https://cpwebassets.codepen.io/assets/packs/lines-2-4e66616a5ef291c3566a7ddfe1ffaaa8.svg" class="decor" alt="">
+                    <div class="box5-item1">
+                        <h1 class="box5-item1_title">Live visited</h1>
+                    </div>
+                    <div class="box5-item2">
+                        <p class="box5-item2_content">57766</p>
+                    </div>
+                </div>
+            </div>
+            <div class="parallax"></div>
+            <div class="container-box6">
+                <div class="panel box6" data-color="white">
+                    <div class="box6-item1">
+                        <h1 class="box6-item1_title">Community</h1>
+                    </div>
+                    <img src="https://cpwebassets.codepen.io/assets/packs/lines-3-4541e35a1939230404d773f7eeddcc9b.svg" class="decor2"  alt="">
+                    <div class="box6-item2 swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                            <div class="component swiper-slide">
+                                <div class="pic">
+                                    <img src="/img/aNam.jpg" class="picNam" alt="">
+                                </div>
+                                <p class="box6-item2_content">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique sit odit fugiat fuga molestias repellat provident sunt hic."</p>
+                                <p class="box6-item2_content2">Nguyen dep trai, nam cuoi y hoc</p>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- =========================== Add carousel ============================== -->
+        <div class="logo-banner">
+            <div class="logo-text">
+            <p>Trusted by team at</p>
+            </div>
+            <div class="logos">
+                <div class="logos-slide">
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                    <img src="./logos/3m.svg" />
+                    <img src="./logos/barstool-store.svg" />
+                    <img src="./logos/budweiser.svg" />
+                    <img src="./logos/buzzfeed.svg" />
+                    <img src="./logos/forbes.svg" />
+                    <img src="./logos/macys.svg" />
+                    <img src="./logos/menshealth.svg" />
+                    <img src="./logos/mrbeast.svg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-main">
+            <div class="footer-bar">
+                <div class="footer-grid">
+                    <h3 class="footer-header">Start <span class="change-text"></span> <div>with INFINITY</div></h3>
+                    <a href="#home" class="footer-btn">Get started for free</a>
+                </div>
+            </div>
+            <div class="footer-list">
+                <footer class="footer section">
+                    <div class="footer__container container grid">
+                        <div class="footer__content">
+                            <a href="#" class="footer__logo">
+                                <img src="/img/infinity.png" alt="" class="footer__logo-img">
+                                infinity
+                            </a>
+    
+                            <p class="footer__description">Enjoy the best translation app of your life.</p>
+                            
+                            <div class="footer__social">
+                                <a href="https://www.facebook.com/" target="_blank" class="footer__social-link">
+                                    <i class='bx bxl-facebook'></i>
+                                </a>
+                                <a href="https://www.instagram.com/" target="_blank" class="footer__social-link">
+                                    <i class='bx bxl-instagram-alt' ></i>
+                                </a>
+                                <a href="https://twitter.com/" target="_blank" class="footer__social-link">
+                                    <i class='bx bxl-twitter' ></i>
+                                </a>
+                            </div>
+                        </div>
+    
+                        <div class="footer__content">
+                            <h3 class="footer__title">About</h3>
+                            
+                            <ul class="footer__links">
+                                <li>
+                                    <a href="#" class="footer__link">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">Features</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">News</a>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="footer__content">
+                            <h3 class="footer__title">Our Services</h3>
+                            
+                            <ul class="footer__links">
+                                <li>
+                                    <a href="#" class="footer__link">Pricing</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">Discounts</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">Shipping mode</a>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="footer__content">
+                            <h3 class="footer__title">Our Company</h3>
+                            
+                            <ul class="footer__links">
+                                <li>
+                                    <a href="#" class="footer__link">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">About us</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">Our mision</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+    
+                    <span class="footer__copy">&#169; Infinity. All rights reserved</span>
+    
+                    <img src="/img/footer1-img.png" alt="" class="footer__img-one">
+                    <img src="/img/footer2-img.png" alt="" class="footer__img-two">
+                </footer>
+            </div>
+        </div>
+
+            <!--=============== SCROLL UP ===============-->
+            <a href="#" class="scrollup" id="scroll-up">
+                <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+            </a>
+        
+        <!-- ==================== JQUERY ======================= -->
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+        <!-- =================== changeColor ================ -->
+        <script src="/js/changeColor.js"></script>
+        <!--=============== SCROLL REVEAL ===============-->
+        <script src="/js/scrollreveal.min.js"></script>
+
+        <!--=============== SWIPER JS ===============-->
+        <script src="/js/swiper-bundle.min.js"></script>
+        
+        <!--=============== MAIN JS ===============-->
+        <script src="/js/main.js"></script>
+
+        <!-- =================== FONT AWSOME ====================== -->
+        <script src="https://kit.fontawesome.com/f34da6635c.js" crossorigin="anonymous"></script>
+        
+    </body>
+</html>
