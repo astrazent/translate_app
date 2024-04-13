@@ -106,15 +106,17 @@ var product = document.createElement("i");
 width_box = textBox.offsetWidth;
 product.style.left = (width_box / 2 - 40).toString() + 'px';
 product.classList.add("fa-solid", "text-box-close", "fa-xmark", "fa-xl");
-
 product.style.display = "none";
 textBox.appendChild(product);
 
 window.addEventListener('resize', function(event) {
     width_box = textBox.offsetWidth;
     product.style.left = (width_box / 2 - 40).toString() + 'px';
+    // if(window.innerWidth < 576){
+    //     product.style.left = (width_box / 2 - 40).toString() + 'px';
+    // }
 });
- 
+
 fromText.addEventListener('keydown', () => {
     setTimeout(() => {
         var value = fromText.value;
@@ -298,26 +300,74 @@ icons.forEach(icon => {
     });
 });
 
-
+//translate sidebar setheight
+const sidebarHeight = () => {
+    var sidebarBox = document.querySelectorAll('.sidebar');
+    var footerList = document.querySelector('.footer-list');
+    var headerHeight = document.querySelector(".header").offsetHeight;
+    var footerHeight = footerList.offsetHeight;
+    sidebarBox.forEach((item) => {
+        item.style.bottom = footerHeight + 'px';
+        item.style.top = headerHeight + 'px';
+    })
+}
+const responsiveProduct = () => {
+    if(window.innerWidth < 576){
+        product.style.width = window.innerWidth;
+    }
+}
+window.addEventListener('resize', () => {
+    sidebarHeight();
+})
+sidebarHeight();
+responsiveProduct();
+const closeSidebar = document.querySelector(".close_sidebar");
+closeSidebar.addEventListener('click', () => {
+    if(window.innerWidth > 576){
+        sidebar.style.width = '0';
+    }
+    else{
+        sidebar.style.display = 'none';
+    }
+})
+var sidebarWidth = '350px';
 //hiệu ứng đóng mở sidebar
 //history button
 togglebtn.addEventListener('click', () => {
-    sidebar.style.width = sidebar.style.width === '350px' ? '0' : '350px';
+    if(window.innerWidth > 576){
+        sidebar.style.display = 'block';
+        sidebar.style.width = sidebar.style.width === sidebarWidth ? '0' : sidebarWidth;
+    }
+    else{
+        sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+    }
     mask(sidebar.style.width);
-    if(sidebar.style.width === '350px'){
+    if(sidebar.style.width === sidebarWidth || sidebar.style.display === 'block'){
+        header.classList.add('scroll-header');
+        window.removeEventListener('scroll', scrollHeader);
         productListContainer.innerHTML = '';
         ListData();
+    }
+    else{
+        window.addEventListener('scroll', scrollHeader);
+        header.classList.remove('scroll-header');
     }
 })
 
 
 //favorite button
 togglebtn2.addEventListener('click', () => {
-    sidebar1.style.width = sidebar1.style.width === '350px' ? '0' : '350px';
+    sidebar1.style.width = sidebar1.style.width === sidebarWidth ? '0' : sidebarWidth;
     mask(sidebar1.style.width);
-    if(sidebar1.style.width === '350px'){
+    if(sidebar1.style.width === sidebarWidth){
+        window.removeEventListener('scroll', scrollHeader);
+        header.classList.add('scroll-header');
         productListContainerFavor.innerHTML = '';
         favoriteData();
+    }
+    else{
+        window.addEventListener('scroll', scrollHeader);
+        header.classList.remove('scroll-header');
     }
 })
 
@@ -340,7 +390,7 @@ const closeSideBar = (sidebar, togglebtn, e) => {
 
 mask = (check) => {
     var mask = document.querySelector(".overlay");
-    if(check === '350px'){
+    if(check === sidebarWidth){
         mask.style.display = "block";
     }
     else{
@@ -414,7 +464,12 @@ const item = (data) => {
         if(list.FavoriteId === '1'){
             heartIcon.classList.toggle('fa-solid');
         }
-        heartIcon.style.color = 'white';
+        if(heartIcon.classList.contains('fa-solid')){
+            heartIcon.style.color = 'red';
+        }
+        else{
+            heartIcon.style.color = 'black';
+        }
         heartIcon.style.marginLeft = '70px'; // Thêm khoảng cách nếu cần
         heartIcon.style.position = 'absolute';
         heartIcon.style.right = '40px';
@@ -440,7 +495,7 @@ const item = (data) => {
         soundIcon.style.fontSize = '1em';
         soundIcon.style.marginLeft = '10px';
         soundIcon.style.cursor = 'pointer';
-        soundIcon.style.color = '#ffd43b';
+        soundIcon.style.color = '#4255FF';
         soundIcon.setAttribute("text", list.TranslateFrom);
         soundIcon.setAttribute("language", list.LanguageFrom);
         var soundIcon2 = document.createElement('i');
@@ -448,7 +503,7 @@ const item = (data) => {
         soundIcon.style.fontSize = '1em';
         soundIcon2.style.marginLeft = '10px';
         soundIcon2.style.cursor = 'pointer';
-        soundIcon2.style.color = '#ffd43b';
+        soundIcon2.style.color = '#4255FF';
         soundIcon2.setAttribute("text", list.TranslateTo);
         soundIcon2.setAttribute("language", list.LanguageTo);
         
@@ -458,14 +513,14 @@ const item = (data) => {
         copy.style.fontSize = '1em';
         copy.style.marginLeft = '10px';
         copy.style.cursor = 'pointer';
-        copy.style.color = '#ffd43b';
+        copy.style.color = '#4255FF';
         copy.setAttribute("text", list.TranslateFrom);
         var copy2 = document.createElement('i');
         copy2.classList.add('fa-solid', 'fa-copy');
         copy2.style.fontSize = '1em';
         copy2.style.marginLeft = '15px';
         copy2.style.cursor = 'pointer';
-        copy2.style.color = '#ffd43b';
+        copy2.style.color = '#4255FF';
         copy2.setAttribute("text", list.TranslateTo);
 
         // Add vào chung một box
@@ -511,6 +566,12 @@ const item = (data) => {
         for(let key in hearts){
                 hearts[key].addEventListener('click', () => {
                     let check = hearts[key].classList.toggle('fa-solid');
+                    if(hearts[key].classList.contains('fa-solid')){
+                        hearts[key].style.color = 'red';
+                    }
+                    else{
+                        hearts[key].style.color = 'black';
+                    }
                     updateKey(check, hearts[key].id)
             });
         }

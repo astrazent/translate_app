@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getHomePage, loginPage, registerPage, loginCheckPage, aboutPage, translatePage, translateHistory, translateList, translateUpdateKey, favoriteList, translateDeleteKey, DeleteFavoriteKey, flashcardPage} = require('../controllers/homeController');
+const {getHomePage, loginPage, registerPage, loginCheckPage, aboutPage, translatePage, translateHistory, translateList, translateUpdateKey, favoriteList, translateDeleteKey, DeleteFavoriteKey, flashcardPage, createFlashCard, getFlashCardList, deleteFlashcard, EditFlashcard, getEditFlashcard, getFlashcard, flashcardPageDetail} = require('../controllers/homeController');
 const {loggedIn} = require('../controllers/checkLogin');
 const {logOut} = require('../controllers/logOut');
 
@@ -19,4 +19,11 @@ router.post('/delete-favorite-key', DeleteFavoriteKey);
 router.get('/translate-list', translateList);
 router.get('/translate-favorite-list', favoriteList);
 router.get('/flashcard', loggedIn, flashcardPage);
+router.get('/flashcard/:id', loggedIn, flashcardPageDetail);
+router.post('/flashcard-create', loggedIn, createFlashCard);
+router.get('/flashcard-get-list', loggedIn, getFlashCardList);
+router.delete('/flashcard-delete-list', loggedIn, deleteFlashcard);
+router.get('/flashcard-get-edit-list/:editId', loggedIn, getEditFlashcard);
+router.put('/flashcard-Edit-list', loggedIn, EditFlashcard);
+router.get('/flashcard-get-detail/:id', loggedIn, getFlashcard);
 module.exports = router; //export variable

@@ -94,7 +94,7 @@ body{
 
 /* ================ My self =============================== */
 :root{
-  --margin-content: 250px;
+  --margin-content: 120px;
 }
 
 /* =============== ANIMATION ========================= */
@@ -142,6 +142,13 @@ body{
     object-fit: cover; /* Fit hình ảnh toàn bộ vào div */
 }
 
+.container{
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 30px;
+  z-index: 5;
+}
 
 /*=============== NAV ===============*/
 .nav{
@@ -386,10 +393,9 @@ body{
 
 .wrap_content{
   max-width: 920px;
-  margin: var(--margin-content) auto;
+  margin: var(--margin-content) auto 0;
 }
 .btn_group{
-  padding-left: 30px;
   display: flex;
 }
 .box{
@@ -399,6 +405,80 @@ body{
   color: #272525;
   white-space: nowrap;
   margin-left: 10px;
+}
+
+/* ================== FLASHCARDS LIST ====================== */
+.flashcard_list{
+  margin-top: 100px;
+  margin-bottom: 100px;
+  color: black;
+}
+.flashcard_list h1{
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ================== FLASHCARDS LIST ITEM ====================== */
+.term_container{
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  overflow: auto;
+}
+
+.flashcard_list--item{
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 320px;
+  height: 173px;
+  padding: 1rem;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 16px;
+}
+.flashcard_list--item:hover{
+  border-bottom: 5px solid #6876f6;
+  background-color: rgb(255, 250, 250);
+}
+.flashcard_list--item:hover h2{
+  color: #4255FF;
+}
+
+.flashcard_boxTitle{
+  display: flex;
+  justify-content: space-between;
+}
+.flashcard_boxIcon i{
+  margin-right: 10px;
+  font-size: larger;
+  cursor: pointer;
+}
+.flashcard_boxIcon .edit:hover{
+  color: #4255FF;
+}
+.flashcard_boxIcon .trash:hover{
+  color: red;
+}
+.flashcard_boxTitle h2{
+  text-transform: capitalize;
+}
+.termNum{
+  color: #2e3856;
+  margin: 1rem 0;
+  height: 1.25rem;
+  display: inline-flex;
+  padding: 0 10px;
+  align-items: center;
+  background-color: #EDEFFF;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 12.5rem;
+}
+
+.dateModified{
+  font-size: small; 
+  margin-top: 40px;
 }
 
 .toggle-btn {
@@ -458,7 +538,7 @@ body{
   position: absolute;
   top:0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   background-color: black;
@@ -470,8 +550,9 @@ body{
   color: black;
   top: 0;
   margin-left: -20px;
+  font-size: larger;
   transform: translateY(-45px);
-  background-color: #ffffff;
+  background-color: #f0f0f0;
   width: calc(100% + 40px);
   height: 80px;
   justify-content: space-around;
@@ -493,7 +574,7 @@ body{
   top: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  z-index: 2;
+  z-index: 3;
   width: 500px;
   border-radius: 10px;
   height: 700px;
@@ -517,7 +598,7 @@ body{
 }
 .termName input{
   align-items: center;
-  width: 300px; /* Độ rộng */
+  width: 100%; /* Độ rộng */
   font-size: 20px; /* Kích cỡ chữ */
   background-color: transparent;
   border: none; /* Viền */
@@ -619,29 +700,32 @@ body{
     color: #FFCD1F;
     border-bottom: 5px solid #FFCD1F;
 }
+/* .popup_more-add{
+  display: block;
+}
+.popup_more-edit{
+  display: none;
+} */
 .popup_content button, .popup_content-sticky button{
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 18px;
   font-weight: 500;
   float: right;
   color: white;
   background-color: #4255FF;
-  width: 80px;
+  padding: 0 10px;
   height: 40px;
 }
+.editList{
+  display: none;
+}
+
 .popup_close{
   position: absolute;
   top: 5px;
   right: 5px;
   cursor: pointer;
 }
-
-
-
-
-
-
-
 
 /* ======================== FLASH CARD ========================= */
 .flip-card {
@@ -655,6 +739,7 @@ body{
 
 .flip-card-inner {
     position: relative;
+    cursor: pointer;
     width: 100%;
     height: 100%;
     transition: transform 0.3s;

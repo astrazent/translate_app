@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lexend:wght@100..900&display=swap');
+
+body{
+    overflow-x: hidden;
+}
+
+.titleName h2{
+    font-family: "Lexend", sans-serif;
+    text-transform: capitalize;
+    font-size: 3.5rem;
+    margin-bottom: 60px;
+    font-weight: 600;
+    color: black;
+}
+.flipCard-controller{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+.flipCard-controller div{
+    transition: .2s ease;
+}
+.flipCard-controller .shuffle-wrap:hover{
+    background-color: #6ea6f4;
+}
+.back-wrap:hover, .next-wrap:hover{
+    background-color: #72b4f5;
+}
+.play-wrap:hover{
+    background-color: #79c4f3;
+}
+.controller{
+    font-size: 50px;
+    color: #3b3e46;
+}
+.back-wrap, .next-wrap{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    padding: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid #cdd0d4;
+}
+.center-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 300px;
+}
+.progress-text{
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #3b3e46;
+}
+.beside-controller{
+    font-size: 35px;
+    color: #3b3e46;
+}
+.shuffle-wrap, .play-wrap{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+}
+.backEffect{
+    animation: back 0.2s;
+}
+.nextEffect{
+    animation: next 0.2s;
+}
+.spacing-line{
+    margin: 10px auto;
+    height: 0.125rem;
+    background-color: #d9dde8;
+}
+.progress-bar{
+    background-color: gray;
+    height: 100%;
+    width: 0;
+}
+
+
+@keyframes back {
+    from {transform: translateX(-100px) rotateY(20deg)}
+    to {transform: translateX(0) rotateY(0)}
+}
+@keyframes next {
+    from {transform: translateX(100px) rotateY(-20deg)}
+    to {transform: translateX(0) rotateY(0)}
+}

@@ -38,18 +38,20 @@ function scrollHeader(){
 }
 window.addEventListener('scroll', scrollHeader)
 
+scrollHeader();
 
 // ==================== FLASH CARD =============================
 var flipCard = document.querySelector(".flip-card");
 var flipCardInner = document.querySelector(".flip-card-inner");
 var angle = 180;
-flipCard.addEventListener('click', () =>{
+    flipCard.addEventListener('click', flipAction);
+function flipAction(){
+    console.log(angle);
     flipCardInner.style.transform = 'rotateX(' + angle + 'deg)';
     angle += 180;
-})
+}
 
-
-// ======================== SHOW POPUP ==================
+// ================= SHOW POPUP ==================
 var togglebtn = document.querySelector('.toggle-btn1');
 var togglebtn2 = document.querySelector('.toggle-btn2');
 var popupAdd = document.querySelector('.popup_add');
@@ -65,9 +67,50 @@ var termDefHDcontent = document.querySelector('.termDef_header-content');
 var popupContent = document.querySelector('.popup_content');
 var termDefWrap = document.querySelector('.termDefWrap');
 
-var popupMore = document.querySelector('.popup_more');
+var popupMore = document.querySelector('.popup_more-add');
+var popupMoreEdit = document.querySelector('.popup_more-edit');
 
+// ================ EDIT POPUP ===================
+const createList = document.querySelectorAll(".createList");
+const editList = document.querySelectorAll(".editList");
+var editFlashcardStickyTitle = document.querySelector(".popup_content-sticky").querySelector("h2");
+var editFlashcardTitle = document.querySelector(".popup_content").querySelector("h1");
+var deleteTerm;
 togglebtn.addEventListener('click', () => {
+    //xoá nội dung bên trong box
+    var check = document.querySelectorAll(".termDef");
+    for (var i = check.length - 1; i >= 2; i--) {
+        // Loại bỏ phần tử con khỏi khối div
+        termDefWrap.removeChild(check[i]);
+    }
+    //update lại số phần tử delete icon
+    deleteTerm = document.querySelectorAll('.deleteTerm');
+
+    termInput.value = ""
+    document.querySelectorAll(".termTN").forEach((i) => {
+        i.value = "";
+    }) 
+    document.querySelectorAll(".termDN").forEach((i) => {
+        i.value = "";
+    }) 
+    //reset hiệu ứng termName
+    termName.style.display = 'flex';
+    termTitle.style.display = 'none';
+
+    // display nút create
+    createList.forEach((y) => {
+        y.style.display = "block";
+    });
+    editList.forEach((x) => {
+        x.style.display = "none";
+    });
+    //sửa lại content title
+    editFlashcardTitle.textContent = 'Tạo học phần mới';
+    editFlashcardStickyTitle.textContent = 'Tạo học phần mới';
+
+    //thay đổi nút popup more khác
+    popupMore.style.display =  'flex';
+    popupMoreEdit.style.display = 'none';
     popupAdd.style.display = "block";
     popupOverlay.style.display = "block";
     document.body.style.overflow = 'hidden';
@@ -97,36 +140,61 @@ termInput.addEventListener('blur', function() {
 });
 
 var deleteTermFunc = () => {
-    var deleteTerm = document.querySelectorAll('.deleteTerm');
+    deleteTerm = document.querySelectorAll('.deleteTerm');
     deleteTerm.forEach((item) => {
         item.addEventListener('click', () => {
-            console.log(deleteTerm);
             if(deleteTerm.length > 2){
                 item.parentNode.parentNode.remove();
                 updateNumber();
+                deleteTerm = document.querySelectorAll('.deleteTerm');
             }
         })
     })
 }
-
+var popupMoreEdit_id;
 var updateNumber = () => {
     var num = 1;
     var numberList = document.querySelectorAll(".termDef_header-content");
+    var tTN = document.querySelectorAll(".termTN");
+    var tDN = document.querySelectorAll(".termDN");
+    var cnt = 1;
+    var cnt2 = 1;
     numberList.forEach((item) => {
         item.textContent = num;
         num++;
-        count = num;
     })
+    tTN.forEach((i) => {
+        i.id = "tTN" + cnt;
+        cnt++;
+    })
+    tDN.forEach((i) => {
+        i.id = "tDN" + cnt2;
+        cnt2++;
+    })
+    if(popupMore.style.display == 'flex'){
+        count = num;
+    }
+    if(popupMoreEdit.style.display == 'flex'){
+        popupMoreEdit_id = num;
+    }
 }
 
 var cloneTermDef = termDef.cloneNode(true);
 cloneTermDef.querySelector(".termDef_header-content").textContent = 2;
+cloneTermDef.querySelector(".termTN").id = "tTN2";
+cloneTermDef.querySelector(".termTN").value = "";
+cloneTermDef.querySelector(".termDN").id = "tDN2";
+cloneTermDef.querySelector(".termDN").value = "";
 termDefWrap.appendChild(cloneTermDef);
 var count = 3;
 
 popupMore.addEventListener('click', () => {
     var cloneTermDef = termDef.cloneNode(true);
     cloneTermDef.querySelector(".termDef_header-content").textContent = count;
+    cloneTermDef.querySelector(".termTN").id = "tTN" + count;
+    cloneTermDef.querySelector(".termTN").value = "";
+    cloneTermDef.querySelector(".termDN").id = "tDN" + count;
+    cloneTermDef.querySelector(".termDN").value = "";
     termDefWrap.appendChild(cloneTermDef);
     count++;
     popupAdd.scrollTop = popupAdd.scrollHeight;
@@ -134,6 +202,9 @@ popupMore.addEventListener('click', () => {
 })
 
 deleteTermFunc();
+
+
+// =============================== CHECK INPUT ===============================
 
 function scrollSticky(){
     var popupSticky = document.querySelector(".popup_content-sticky");
@@ -148,3 +219,6 @@ function scrollSticky(){
 
 }
 popupAdd.addEventListener('scroll', scrollSticky);
+
+
+

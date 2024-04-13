@@ -72,7 +72,7 @@ registerSubmit.addEventListener("click", () => {
 loginSubmit.addEventListener("click", () => {
     const login = {
         loginEmail: loginEmail.value,
-        loginPassword: loginPassword.value,
+        loginPassword: loginPassword.value,                                                                                          
     };
     fetch("/api/check-login", {
         method: "POST",

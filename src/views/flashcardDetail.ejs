@@ -5,6 +5,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="/img/infinity.png" type="image/x-icon">
+        <link rel="stylesheet" href="/css/flashcardDetail.css">
         <link rel="stylesheet" type="text/css" href="/css/flashcard.css" />
         <link rel="stylesheet" href="/css/flashcardResponsive.css">
         <link rel="stylesheet" href="/css/alert.css" />
@@ -91,6 +92,10 @@
                     Favorite</h2>
                 <div id="product-list-container-favor"></div>
             </div>
+
+            <div class="titleName">
+                <h2>Animals</h2>
+            </div>
             <div class="btn_group">
                 <div class="box box1">
                     <button class="toggle-btn toggle-btn1"><i class="ri-history-line header_icon" style="color:#4255FF; margin-right: 10px"></i>
@@ -158,16 +163,26 @@
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <div class="flip-card_content">
-                            Divulge
                         </div>
                     </div>
                     <div class="flip-card-back">
-                        v. To tell; to reveal (as a secret)
                     </div>
                 </div>
             </div>
-
-        <div class="spacing-line"></div>
+            <div class="flipCard-controller">
+                <div class="play-wrap"><i class="ri-play-fill play beside-controller"></i></div>
+                <div class="center-wrap">
+                    <div class="back-wrap"><i class="ri-arrow-left-line back controller"></i></div>
+                    <div class="progress-text">
+                        <p></p>
+                    </div>
+                    <div class="next-wrap"><i class="ri-arrow-right-line next controller"></i></div>
+                </div>
+                <div class="shuffle-wrap"><i class="ri-shuffle-line beside-controller"></i></div>
+            </div>
+        <div class="spacing-line">
+            <div class="progress-bar"></div>
+        </div>
         <div class="flashcard_list">
             <h1>Học phần đã tạo:</h1>
             <div class="term_container">
@@ -258,6 +273,7 @@
         <div class="overlay"></div>
         <script src="https://kit.fontawesome.com/f34da6635c.js" crossorigin="anonymous"></script>
         <script src="/js/flashcard.js"></script>
+        <script src="/js/flashcardDetail.js"></script>
         <script src="/js/flashCardCreate.js"></script>
     </body>
 </html>

@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="/img/infinity.png" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="/css/translate.css" />
+        <link rel="stylesheet" type="text/css" href="/css/translateResponsive.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -81,8 +82,11 @@
             </div>
 
             <div class="sidebar sidebar1">
-                <h2 class="sidebar_title"><i class="ri-history-line header_icon" style="color:#4255FF"></i>
-                    History</h2>
+                <div class="sidebar_header">
+                    <h2 class="sidebar_title"><i class="ri-history-line header_icon" style="color:#4255FF"></i>
+                        History</h2>
+                        <i class="ri-close-line close_sidebar" style="color:rgb(94, 94, 94)"></i>
+                </div>
                 <div id="product-list-container"></div>
             </div>
             <div class="sidebar sidebar2">
@@ -94,13 +98,39 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="text-box">
+                        <ul class="controls mobile">
+                            <li class="row from">
+                                <select></select>
+                            </li>
+                            <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
+                            <li class="row to">
+                                <select></select>
+                            </li>
+                        </ul>
                         <div class="text-input">
                             <textarea spellcheck="false" class="from-text" placeholder="Enter text" ></textarea>
+                            <ul class="controls mobile">
+                                <li class="row from">
+                                    <div class="icons">
+                                        <i id="from" class="fas fa-volume-up"></i>
+                                        <i id="from" class="fas fa-copy"></i>
+                                        <i class="fa-solid fa-microphone"></i>
+                                    </div>
+                                </li>
+                            </ul>
                             <textarea spellcheck="false"  disabled class="to-text" placeholder="Translation"></textarea>
                         </div>
                     </div>
                 </div>
-                <ul class="controls">
+                <ul class="controls mobile">
+                    <li class="row to">
+                        <div class="icons">
+                            <i id="to" class="fas fa-volume-up"></i>
+                            <i id="to" class="fas fa-copy"></i>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="controls desktop">
                     <li class="row from">
                         <div class="icons">
                             <i id="from" class="fas fa-volume-up"></i>

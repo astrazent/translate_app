@@ -1,0 +1,257 @@
+
+@media screen and (min-width: 1200px){
+    .mobile{
+        display: none;
+    }
+}
+@media screen and (max-width: 1200px){
+    .wrap_content{
+        max-width: 992px;
+    }
+    .container{
+        max-width: 992px;
+    }
+    .mobile{
+        display: none;
+    }
+    .sidebar_title{
+        font-size: 30px;
+    }
+    .sidebar_header{
+        padding-bottom: 20px;
+    }
+}
+@media screen and (max-width: 992px){
+    .wrap_content{
+        max-width: 767px;
+    }
+    .container{
+        max-width: 767px;
+        margin: 0 auto;
+    }
+    .mobile{
+        display: none;
+    }
+    .toggle-btn{
+        width: 150px;
+        font-size: 1.25rem;
+        height: 40px;
+        padding-top: 5px;
+        padding-bottom: 14px;
+    }
+    .header_icon{
+        margin-right: 7px !important;
+    }
+    .section{
+        padding-bottom: 20px;
+    }
+}
+@media screen and (max-width: 767px){
+    /* container */
+    .wrap_content{
+        max-width: 520px;
+        margin-top: 90px;
+    }
+    .container{
+        max-width: 567px;
+        margin-top: 5px;
+    }
+    .circle{
+        width: 35px;
+        height: 35px;
+    }
+    .mobile{
+        display: none;
+    }
+    .controls .row .icons i{
+        font-size: 15px;
+    }
+    .controls .row select {
+        font-size: 12px;
+    }
+    .controls .row .icons i{
+        width: auto;
+    }
+    .controls .row .icons{
+        width: auto;
+    }
+    .container .translateBtn{
+        font-size: 12px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .text-input textarea{
+        padding: 10px 30px 10px 15px;
+    }
+    .wrap_content{
+        margin-top: 100px;
+        margin-bottom: 90px;
+    }
+    .toggle-btn{
+        width: 120px;
+        font-size: 1rem;
+        height: 35px;
+        padding-top: 5px;
+        padding-bottom: 14px;
+    }
+    .text-box-close{
+        z-index: 1;
+    }
+    .section{
+        padding-bottom: 20px;
+    }
+    .sidebar{
+        padding-top: 20px;
+    }
+    .sidebar_header{
+        padding-bottom: 10px;
+    }
+    .sidebar_title{
+        font-size: 25px;
+    }
+    .close_sidebar{
+        font-size: 30px;
+        margin-right: 20px;
+    }
+    .product{
+        width: 350px;
+        border: none;
+        margin: 10px 0 0;
+        padding: 0 10px;
+        border-top: 1px solid #ccc;
+    }
+    .fa-x{
+        right: 20px !important;
+    }
+    .fa-heart{
+        right: 50px !important;
+    }
+}
+@media screen and (max-width: 576px){
+    .circle{
+        width: 30px;
+        height: 30px;
+    }
+    .text-input{
+        flex-direction: column;
+        row-gap: 10px;
+    }
+    .text-input textarea{
+        height: 200px;
+    }
+    .text-box-close{
+        top: 60px;
+        left: initial !important;
+        right: 12px !important;
+    }
+    .desktop{
+        display: none;
+    }
+    .mobile{
+        display: flex;
+    }
+    .controls .row .icons i{
+        font-size: 15px;
+    }
+    /* .controls .row select {
+        font-size: 12px;
+    } */
+    .controls .row select{
+        font-size: 15px;
+        /* background: none; */
+    }
+    .controls .row.from .icons {
+        border-right: none;
+    }
+    .controls .row.to .icons {
+        border-left: none;
+    }
+    .controls .row.to .icons {
+        padding-left: 0;
+    }
+    .toggle-btn{
+        width: 100px;
+        height: 30px;
+        padding-top: 2px;
+        padding-bottom: 14px;
+    }
+    .header_icon{
+        margin-right: 3px !important; 
+    }
+    .section{
+        padding-bottom: 20px;
+    }
+    .sidebar{
+        transition: none;
+        position: fixed;
+        left: 0;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        display: none;
+    }
+    .product{
+        border: none;
+        margin: 10px 0 0;
+        padding: 0 10px;
+        border-top: 1px solid #ccc;
+    }
+    .sidebar_title{
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 320px){
+    .wrap_content{
+        max-width: 100%;
+        margin-top: 50px;
+    }
+    .container{
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .controls .row select{
+        font-size: 12px;
+        /* background: none; */
+    }
+    .controls .exchange {
+        font-size: 12px;
+    }
+    .controls{
+        flex-direction: column;
+        row-gap: 5px;
+    }
+    .text-input{
+        row-gap: 0;
+    }
+    .translateBtn{
+        margin-top: 0;
+    }
+    .text-box-close{
+        top: 95px;
+    }
+    .circle{
+        width: 25px;
+        height: 25px;
+    }
+    .toggle-btn{
+        width: 50px;
+        height: 30px;
+        padding-top: 2px;
+        padding-bottom: 14px;
+    }
+    .nav__img{
+        display: none;
+    }
+    .footer__img-one{
+        display: none;
+    }
+    .footer__img-two{
+        display: none;
+    }
+    .section{
+        padding-bottom: 20px;
+    }
+    .header_icon{
+        margin-right: 3px !important; 
+    }
+}
