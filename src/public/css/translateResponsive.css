@@ -191,6 +191,7 @@
         display: none;
     }
     .product{
+        width: 100%;
         border: none;
         margin: 10px 0 0;
         padding: 0 10px;
@@ -253,5 +254,22 @@
     }
     .header_icon{
         margin-right: 3px !important; 
+    }
+    .fa-x{
+        top: 9px !important;
+        right: 15px !important;
+        font-size: 15px !important;
+    }
+    .fa-heart{
+        top: 9px !important;
+        right: 35px !important;
+        font-size: 15px !important;
+    }
+    .product p {
+        font-size: 15px;
+        margin: 3px 0;
+    }
+    .product h3{
+        font-size: 15px;
     }
 }

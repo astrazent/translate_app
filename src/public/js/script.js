@@ -311,16 +311,17 @@ const sidebarHeight = () => {
         item.style.top = headerHeight + 'px';
     })
 }
-const responsiveProduct = () => {
-    if(window.innerWidth < 576){
-        product.style.width = window.innerWidth;
-    }
-}
+// const responsiveProduct = () => {
+//     var productItem = document.querySelectorAll(".product");
+//     if(window.innerWidth < 576){
+//         console.log(window.innerWidth);
+//         productItem.style.width = '400px';
+//     }
+// }
 window.addEventListener('resize', () => {
     sidebarHeight();
 })
 sidebarHeight();
-responsiveProduct();
 const closeSidebar = document.querySelector(".close_sidebar");
 closeSidebar.addEventListener('click', () => {
     if(window.innerWidth > 576){
