@@ -74,3 +74,35 @@
     transition: .1s;
     background: #2e3eca;
 }
+@media screen and (max-width: 767px) {
+    .popup-box{
+        width: 450px;
+    }
+}
+@media screen and (max-width: 576px) {
+    .popup-box{
+        width: 350px;
+    }
+    .popup-box h1{
+        font-size: 25px;
+    }
+    .btns .btn1, .btns .btn2{
+        font-size: 10px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .popup-box{
+        width: 250px;
+    }
+    .popup-box h1{
+        font-size: 20px;
+    }
+    .btns{
+        display: flex;
+        row-gap: 10px;
+        flex-direction: column;
+    }
+    .btns .btn2{
+        margin-left: 0;
+    }
+}

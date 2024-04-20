@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const getHomePage = (req, res) => {
     if(req.user){
-        return res.render('home_main.ejs', {status:"LoggedIn", user: req.user}); 
+        return res.render('home_main.ejs', {status:"LoggedIn"}); 
     }
     else{
         return res.render('home_main.ejs', {status:"LoggedOut"})
@@ -42,7 +42,6 @@ const postUpdateUser = async (req, res) => {
     SET Firstname = ?, Lastname = ?, Address = ?, City = ? 
     WHERE PersonID = ?`, [fname, lname, address, city, id]
     );  
-    console.log(id, fname, lname, address, city);
     res.redirect('/');
 }
 
@@ -67,7 +66,49 @@ const registerPage =  async (req, res) => {
         else{
             try{
                 const password = await bcrypt.hash(registerPassword, 8);
-                const [results, fields] = await connection.query('INSERT INTO Users (Name, Email, Password) VALUES (?, ?, ? )', [registerName, registerEmail, password]);
+                await connection.query('INSERT INTO Users (Name, Email, Password) VALUES (?, ?, ? )', [registerName, registerEmail, password]);
+                const [rslt, flds] = await connection.query('SELECT ID  FROM Users WHERE Name = ?', [registerName]);
+                var userId = rslt[0].ID;
+                await connection.query(`
+                CREATE TABLE TranslateHistory_` + userId + ` (
+                    History_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                    FavoriteId VARCHAR(1) NOT NULL,
+                    ID INT,
+                    LanguageFrom VARCHAR(255) NOT NULL,
+                    LanguageTo VARCHAR(255) NOT NULL,
+                    TranslateFrom TEXT,
+                    TranslateTo TEXT,
+                    FOREIGN KEY (ID) REFERENCES Users(ID)
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL
+                );`);
+                await connection.query(`
+                CREATE TABLE TranslateFavorite_` + userId + ` (
+                    Favorite_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                    History_id INT UNIQUE,
+                    ID INT,
+                    LanguageFrom VARCHAR(255) NOT NULL,
+                    LanguageTo VARCHAR(255) NOT NULL,
+                    TranslateFrom TEXT,
+                    TranslateTo TEXT,
+                    FOREIGN KEY (History_id) REFERENCES TranslateHistory_` + userId + ` (History_id)
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL,
+                    FOREIGN KEY (ID) REFERENCES Users(ID)
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL
+                );`);
+                await connection.query(`
+                CREATE TABLE FlashCardTitle_` + userId + ` (
+                    Title_Id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                    ID INT,
+                    Name VARCHAR(255) UNIQUE NOT NULL,
+                    TotalItem INT NOT NULL,
+                    TitleDate DATETIME NOT NULL,
+                    FOREIGN KEY (ID) REFERENCES Users(ID)
+                    ON UPDATE SET NULL
+                    ON DELETE SET NULL
+                );`);
                 return res.json({status: "success", message: "Register success!"});
             }
             catch(err){
@@ -122,60 +163,62 @@ const translatePage = (req, res) => {
 }
 
 const translateHistory = async (req, res) => {
-    let {translateFrom, translateToText, languageFrom, languageTo} = req.body;
+    let {id, translateFrom, translateToText, languageFrom, languageTo} = req.body;
     const [results, fields] = await connection.query(
         `INSERT INTO 
-        TranslateHistory (FavoriteId, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo) 
+        TranslateHistory_` + id + ` (FavoriteId, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo) 
         VALUES (?, ?, ?, ?, ?)`, ['0', languageFrom, languageTo, translateFrom, translateToText]
         );
         return res.json({status: 'success', message: 'Save success'})  
 }
 
 const translateList = async (req, res) => {
-    let [results, fields] = await connection.query(`SELECT * FROM TranslateHistory`);
+    let {id} = req.params;
+    let [results, fields] = await connection.query(`SELECT * FROM TranslateHistory_` + id);
     if(!results.length) return res.json({})
     return res.json(results) 
 }
 
 const translateUpdateKey = async (req, res) => {
-    let {check, id} = req.body
+    let {userid, check, id} = req.body
     if(check){
         //cập nhật trạng thái favorite của từ
-        await connection.query(`INSERT INTO TranslateFavorite (History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo)
+        await connection.query(`INSERT INTO TranslateFavorite_` + userid + ` (History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo)
         SELECT History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo
-        FROM TranslateHistory
-        WHERE History_id = ?`, [id])
-        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '1' WHERE History_id = ?`, [id])
+        FROM TranslateHistory_` + userid +
+        ` WHERE History_id = ?`, [id])
+        await connection.query(`UPDATE TranslateHistory_` + userid + ` SET FavoriteId  = '1' WHERE History_id = ?`, [id])
     }
     else{
-        await connection.query(`DELETE FROM TranslateFavorite WHERE History_id = ?`, [id]);
-        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '0' WHERE History_id = ?`, [id]);
+        await connection.query(`DELETE FROM TranslateFavorite_` + userid + ` WHERE History_id = ?`, [id]);
+        await connection.query(`UPDATE TranslateHistory_` + userid + ` SET FavoriteId  = '0' WHERE History_id = ?`, [id]);
     }
     return res.json({status: 'success', message: 'Update success'}) 
 }
 
 const favoriteList = async (req, res) => {
-    let [results, fields] = await connection.query(`SELECT * FROM TranslateFavorite`);
+    let {id} = req.params;
+    let [results, fields] = await connection.query(`SELECT * FROM TranslateFavorite_` + id);
     return res.json(results) 
 }
 
 const translateDeleteKey = async (req, res) => {
-    let {id} = req.body;
-    await connection.query(`DELETE FROM TranslateHistory WHERE History_id = ?`, [id]);
+    let {userid, id} = req.body;
+    await connection.query(`DELETE FROM TranslateHistory_` + userid + ` WHERE History_id = ?`, [id]);
     return res.json({status: 'success', message: 'Delete history list success'}) 
 }
 
 const DeleteFavoriteKey = async (req, res) => {
-    let {favorId, hisId} = req.body;
-    await connection.query(`DELETE FROM TranslateFavorite WHERE Favorite_id = ?`, [favorId]);
+    let {id, favorId, hisId} = req.body;
+    await connection.query(`DELETE FROM TranslateFavorite_` + id + ` WHERE Favorite_id = ?`, [favorId]);
     if(hisId){
-        await connection.query(`UPDATE TranslateHistory SET FavoriteId  = '0' WHERE History_id = ?`, [hisId]);
+        await connection.query(`UPDATE TranslateHistory_`+ id + ` SET FavoriteId  = '0' WHERE History_id = ?`, [hisId]);
     }
 }
 
 const flashcardPage = (req, res) => {
     if(req.user){
-        return res.render('flashcard.ejs', {status:"LoggedIn"}); 
+        return res.render('flashcard.ejs', {status:"LoggedIn", user: req.user});
     }
     else{
         return res.render('login_main.ejs');
@@ -184,28 +227,28 @@ const flashcardPage = (req, res) => {
 
 const createFlashCard = async (req, res) => {
     //nhận dữ liệu từ frontend
-    let {tI, tTN, tDN} = req.body;
+    let {id, tI, tTN, tDN} = req.body;
 
     //check null
     if(!tI || tTN.includes("") || tDN.includes("")) return res.json({status: "error", message: "Please not miss any field!"});
 
     //thêm tiêu đề và flashcardtitle
-    const [result_title, fields_title] = await connection.query(`INSERT IGNORE INTO FlashCardTitle (Name, TotalItem, TitleDate) VALUES (?, ?, ?)`, [tI, tTN.length, dateNow()]);
+    const [result_title, fields_title] = await connection.query(`INSERT IGNORE INTO FlashCardTitle_` + id + ` (Name, TotalItem, TitleDate) VALUES (?, ?, ?)`, [tI, tTN.length, dateNow()]);
     if(!result_title.affectedRows) return res.json({status: "error", message: "Duplicate flashcard title"});
-    const [rslt, flds] = await connection.query(`SELECT Title_Id FROM FlashCardTitle WHERE Name = ?`, [tI]);
+    const [rslt, flds] = await connection.query(`SELECT Title_Id FROM FlashCardTitle_` + id + ` WHERE Name = ?`, [tI]);
     if(!rslt[0]) return res.json({status: "error", message: "Get title id Failed"});
 
     // tạo bảng flashcard
+    console.log(rslt);
     var titleId = rslt[0].Title_Id;
-    var flashcard_Table = "FlashCards_" + titleId;
-    var constrain_key = "fk_Title_id_" + titleId;
+    var flashcard_Table = "FlashCards_" + id + "_" + titleId;
     const [result_create, fields_create] = await connection.query(`
     CREATE TABLE `+ flashcard_Table + ` (
         Flashcard_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         Title_Id INT,
         TermTN VARCHAR(255) NOT NULL,
         TermDN VARCHAR(255) NOT NULL,
-        CONSTRAINT `+ constrain_key + ` FOREIGN KEY (Title_Id) REFERENCES FlashCardTitle(Title_Id)
+        FOREIGN KEY (Title_Id) REFERENCES FlashCardTitle_` + id + ` (Title_Id)
         ON UPDATE SET NULL
         ON DELETE SET NULL
     );`);
@@ -229,42 +272,45 @@ const createFlashCard = async (req, res) => {
 }
 
 const getFlashCardList = async (req, res) => {
+    let {id} = req.params;
+    console.log("check");
     const [results, fields] = await connection.query(`
     SELECT *,
     DATE_FORMAT(TitleDate, '%d-%m-%y %H:%i:%s') AS formated_time
-    FROM FlashCardTitle
-    ORDER BY formated_time DESC`);
+    FROM FlashCardTitle_` + id +
+    ` ORDER BY formated_time DESC`);
     return res.json(results);
 }
 
 const deleteFlashcard = async (req, res) => {
-    let {deleteId} = req.body;
-    const [results, fields] = await connection.query(`DELETE FROM FlashCardTitle WHERE Title_Id = ?`, [deleteId]);
-    const [rslts, flds] = await connection.query(`DROP TABLE IF EXISTS FlashCards_` + deleteId);
+    let {id, deleteId} = req.body;
+    const [results, fields] = await connection.query(`DELETE FROM FlashCardTitle_` + id + ` WHERE Title_Id = ?`, [deleteId]);
+    const [rslts, flds] = await connection.query(`DROP TABLE IF EXISTS FlashCards_` + id + `_` + deleteId);
     if(!results.affectedRows) return res.json({status: "error", message: "Delete flashcard title Failed"});
     if(!rslts.serverStatus) return res.json({status: "error", message: "Delete flashcard List Failed"});
     return res.json({status: "success", message: "Delete flashcard success"});
 }
 const getEditFlashcard = async (req, res) => {
-    let {editId} = req.params;
+    let {id, editId} = req.params;
     // lấy tiêu đề
-    const [results, fields] = await connection.query(`SELECT Name FROM FlashCardTitle WHERE Title_Id = ?`, [editId]);
+    const [results, fields] = await connection.query(`SELECT Name FROM FlashCardTitle_` + id + ` WHERE Title_Id = ?`, [editId]);
     if(!results[0]) return res.json({status: "error", message: "Get flashcard title Failed"});
 
     //lấy dữ liệu 
-    const [rslts, flds] = await connection.query(`SELECT * FROM FlashCards_` + editId);
+    const [rslts, flds] = await connection.query(`SELECT * FROM FlashCards_` + id + `_` + editId);
     if(!rslts[0]) return res.json({status: "error", message: "Add flashcard List Failed"});
     return res.json({titleName: results[0], flashcards: rslts});
 }
 const EditFlashcard = async (req, res) => {
-    let {flashcardId, editId, name, tTN, tDN} = req.body;
+    let {id, flashcardId, editId, name, tTN, tDN} = req.body;
+    console.log(editId);
     //sửa tiêu đề
-    const [results, fields] = await connection.query(`UPDATE FlashCardTitle SET Name = ?, TotalItem = ?, TitleDate = ? WHERE Title_Id = ?;`, [name, tTN.length, dateNow(), editId]);
+    const [results, fields] = await connection.query(`UPDATE FlashCardTitle_` + id + ` SET Name = ?, TotalItem = ?, TitleDate = ? WHERE Title_Id = ?;`, [name, tTN.length, dateNow(), editId]);
     if(!results.affectedRows) return res.json({status: "error", message: "Edit flashcard title Failed"});
 
     // add từ vựng vào flashcard
     const editSql = (editId, tTN, tDN) => {
-        var sql = `INSERT INTO FlashCards_` + editId + ` (FlashCard_id, Title_Id, TermTN, TermDN) VALUES `;
+        var sql = `INSERT INTO FlashCards_` + id + `_` + editId + ` (FlashCard_id, Title_Id, TermTN, TermDN) VALUES `;
         //lấy ra title id
         for(i = 0; i < tTN.length; i++){
             sql += "(" + flashcardId[i] + ', ' + editId + ', ' + '"' + tTN[i] + '"' + ', ' + '"' + tDN[i] + '")';
@@ -276,7 +322,7 @@ const EditFlashcard = async (req, res) => {
         return sql;
     }
     const deleteSql = (editId) => {
-        var sql = `DELETE FROM FlashCards_` + editId + ` WHERE Title_Id = ` + editId + " AND Flashcard_id NOT IN (";
+        var sql = `DELETE FROM FlashCards_` + id + `_` + editId + ` WHERE Title_Id = ` + editId + " AND Flashcard_id NOT IN (";
         for(i = 0; i < flashcardId.length; i++){
             sql += flashcardId[i];
             if(i != flashcardId.length - 1) sql += ', ';
@@ -299,13 +345,25 @@ const flashcardPageDetail = async (req, res) => {
     }
 }
 const getFlashcard = async (req, res) => {
-    let {id} = req.params;
+    let {userid, id} = req.params;
+    if(id == 'favorite'){
+        console.log(userid, id);
+        let [resultsfav, fieldsfav] = await connection.query(`SELECT * FROM TranslateFavorite_` + userid);
+        if(!resultsfav[0]) return res.json({status: "error", message: "No favorite word"});
+        return res.json({titleName: -1, resultsfav})
+    }
+    console.log("check");
+    if(isNaN(id)){
+        return;
+    }
     // lấy tiêu đề
-    const [results, fields] = await connection.query(`SELECT Name FROM FlashCardTitle WHERE Title_Id = ?`, [id]);
+    const [results, fields] = await connection.query(`SELECT Name FROM FlashCardTitle_` + userid + ` WHERE Title_Id = ?`, [id]);
     if(!results[0]) return res.json({status: "error", message: "Get flashcard title Failed"});
 
     //lấy dữ liệu 
-    const [rslts, flds] = await connection.query(`SELECT * FROM FlashCards_` + id);
+    const [rslts, flds] = await connection.query(`SELECT * FROM FlashCards_` + userid + `_` + id);
+    console.log(results);
+    console.log(rslts);
     if(!rslts[0]) return res.json({status: "error", message: "Add flashcard List Failed"});
     return res.json({titleName: results[0], flashcards: rslts});
 }

@@ -142,6 +142,36 @@ body{
   object-fit: cover; /* Fit hình ảnh toàn bộ vào div */
 }
 
+/* ====================== AVATAR MENU ================== */
+.vertical-menu {
+  display: none;
+  width: 200px;
+  position: fixed;
+  box-shadow: 0 0.75rem 1.5rem 0 #282e3e14;
+}
+
+.vertical-menu a {
+  background-color: #F6F7FB;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+.vertical-menu a:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.vertical-menu a:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #0056b3;
+  color: white;
+}
 
 /*=============== NAV ===============*/
 .nav{
@@ -180,6 +210,9 @@ body{
 .nav__login{
   margin-left: 150px;
   color: #3c87c9;
+}
+.unused{
+  color: rgb(165, 164, 164) !important;
 }
 
 @media screen and (max-width: 767px){
@@ -369,6 +402,7 @@ body{
   justify-content: space-between;
   white-space: nowrap;
   align-items: center;
+  margin-bottom: 30px;
 }
 .close_sidebar{
   cursor: pointer;
@@ -431,18 +465,9 @@ body{
   font-size: 1.5rem;
   overflow: hidden;
 }
-.test_color{
-  background-color: #7583FF;
-  opacity: 0.5;
-  border-radius: .5rem;
-  transform: translateY(-0.3px);
-  width: 167px;
-  height: 2px;
-  display: none;
-}
 
-.toggle-btn:hover .test_color{
-  display: block;
+.toggle-btn:hover{
+  border-bottom: 3px solid #6876f6;
 }
 
 

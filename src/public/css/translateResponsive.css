@@ -17,9 +17,6 @@
     .sidebar_title{
         font-size: 30px;
     }
-    .sidebar_header{
-        padding-bottom: 20px;
-    }
 }
 @media screen and (max-width: 992px){
     .wrap_content{
@@ -50,7 +47,8 @@
     /* container */
     .wrap_content{
         max-width: 520px;
-        margin-top: 90px;
+        margin-top: 150px;
+        margin-bottom: 150px;
     }
     .container{
         max-width: 567px;
@@ -83,10 +81,6 @@
     .text-input textarea{
         padding: 10px 30px 10px 15px;
     }
-    .wrap_content{
-        margin-top: 100px;
-        margin-bottom: 90px;
-    }
     .toggle-btn{
         width: 120px;
         font-size: 1rem;
@@ -104,10 +98,10 @@
         padding-top: 20px;
     }
     .sidebar_header{
-        padding-bottom: 10px;
+        margin-bottom: 20px;
     }
     .sidebar_title{
-        font-size: 25px;
+        font-size: 30px;
     }
     .close_sidebar{
         font-size: 30px;
@@ -117,7 +111,7 @@
         width: 350px;
         border: none;
         margin: 10px 0 0;
-        padding: 0 10px;
+        padding: 5px 10px;
         border-top: 1px solid #ccc;
     }
     .fa-x{
@@ -194,7 +188,7 @@
         width: 100%;
         border: none;
         margin: 10px 0 0;
-        padding: 0 10px;
+        padding: 5px 10px;
         border-top: 1px solid #ccc;
     }
     .sidebar_title{

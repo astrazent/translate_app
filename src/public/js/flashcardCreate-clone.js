@@ -49,12 +49,12 @@ var addClass = () => {
     var arrTN = [];
     for (i = 1; i <= numberList.length; i++) {
         var tTN = document.getElementById("tTN" + i);
-        arrTN.push(tTN.value);
+        arrTN.push(tTN.value.trim());
     }
     var arrDN = [];
     for (i = 1; i <= numberList.length; i++) {
         var tDN = document.getElementById("tDN" + i);
-        arrDN.push(tDN.value);
+        arrDN.push(tDN.value.trim());
     }
     return [arrTN, arrDN];
 };

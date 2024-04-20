@@ -27,13 +27,13 @@
             <label>Bạn có muốn tiếp tục?</label>
             <div class="btns">
                 <button class="btn1">Cancel Process</button>
-                <button class="btn2">Delete Account</button>
+                <button class="btn2">Delete flashcard</button>
             </div>
         </div>
 
         <header class="header" id="header">
             <nav class="nav container">
-                <a href="#" class="nav__logo">
+                <a href="/" class="nav__logo">
                     <img src="/img/infinity.png" class="nav__logo-img"> 
                     <span class="logo-header_text">infinity</span>
                 </a>
@@ -41,18 +41,18 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
-                            <a href="/translate" class="nav__link active-link">Translate</a>
+                            <a href="/translate" class="nav__link">Translate</a>
                         </li>
 
                         <li class="nav__item">
-                            <a href="#trick" class="nav__link">flashcard</a>
+                            <a href="/flashcard" class="nav__link active-link">flashcard</a>
                         </li>
 
                         <li class="nav__item">
-                            <a href="#new" class="nav__link">Docs</a>
+                            <a href="#docs" class="nav__link unused">Docs</a>
                         </li>
                         
-                        <a href="#support" class="nav__link">Support</a>
+                        <a href="#support" class="nav__link unused">Support</a>
                     </ul>
 
                     <div class="nav__close" id="nav-close">
@@ -70,6 +70,7 @@
                         <div class="circle">
                             <img src="/img/Animepic3.jpg" alt="Your Image">
                         </div>
+                        <div class="userid" style="display: none;"><%= user.ID %></div>
                     <%} else{%>
                         <a href="/login">
                             <div class="nav__login">
@@ -78,6 +79,14 @@
                         </a>
                     <%} %>
                 </div>
+                <%if (status == 'LoggedIn'){ %>
+                    <div class="vertical-menu">
+                        <a href="/logout">Log out</a>
+                        <!-- <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a> -->
+                    </div>
+                <%} %>
             </nav>
         </header>
 
@@ -94,7 +103,7 @@
             </div>
 
             <div class="titleName">
-                <h2>Animals</h2>
+                <h2></h2>
             </div>
             <div class="btn_group">
                 <div class="box box1">
@@ -119,8 +128,14 @@
                     <button class="createList">Tạo</button>
                     <button class="editList">Hoàn tất</button>
                 </div>
+                
                 <div class="popup_content">
                     <h1 style="font-size: 30px; text-align: center;">Tạo học phần mới</h1>
+                    <div class="warningLength">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: red;">
+                            <span class="warningText">Over limit 100 character</span>
+                        </i>
+                    </div>
                     <div class="termName">
                         <h3 class="termTitle">Tiêu đề</h3>
                         <input type="text" class ="termInput" id="tI" autocomplete="off" placeholder="Nhập tên học phần" required>
@@ -164,13 +179,31 @@
                     <div class="flip-card-front">
                         <div class="flip-card_content">
                         </div>
+                        <div class="activeControllerFront">
+                            <p class="activeController_contentFront"></p>
+                            <p class="stateFront" style="color: yellow;">ON</p>
+                        </div>
                     </div>
                     <div class="flip-card-back">
+                        <div class="flip-card_content-back">
+                        </div>
+                        <div class="activeControllerBack">
+                            <p class="activeController_contentBack"></p>
+                            <p class="stateBack" style="color: yellow;">ON</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="flipCard-controller">
-                <div class="play-wrap"><i class="ri-play-fill play beside-controller"></i></div>
+                <div class="left-wrap">
+                    <div class="play-wrap">
+                        <i class="ri-play-fill play beside-controller"></i>
+                    </div>
+                    <h3 class="speed15 speed">x1.5</h3>
+                    <h3 class="speed2 speed">x2</h3>
+                    <h3 class="speed25 speed">x2.5</h3>
+                    <h3 class="speed3 speed">x3</h3>
+                </div>
                 <div class="center-wrap">
                     <div class="back-wrap"><i class="ri-arrow-left-line back controller"></i></div>
                     <div class="progress-text">
@@ -178,7 +211,15 @@
                     </div>
                     <div class="next-wrap"><i class="ri-arrow-right-line next controller"></i></div>
                 </div>
-                <div class="shuffle-wrap"><i class="ri-shuffle-line beside-controller"></i></div>
+                <div class="right-wrap">
+                    <h3>x1.5</h3>
+                    <h3>x2</h3>
+                    <h3>x2.5</h3>
+                    <h3>x3</h3>
+                    <div class="shuffle-wrap">
+                        <i class="ri-shuffle-line beside-controller"></i>
+                    </div>
+                </div>
             </div>
         <div class="spacing-line">
             <div class="progress-bar"></div>

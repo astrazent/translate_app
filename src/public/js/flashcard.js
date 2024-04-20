@@ -30,7 +30,35 @@ function linkAction(){
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
+// ==================== NAV MENU =======================
+var headerHeight = document.querySelector(".header").offsetHeight;
+var verticalMenu = document.querySelector(".vertical-menu");
+var avatar = document.querySelector(".circle");
 
+const avaMenu = () => {
+    var containerHeaderWidth = document.querySelector(".container").offsetWidth;
+    verticalMenu.style.top = headerHeight + "px";
+    verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
+}
+avaMenu();
+window.addEventListener('resize', () => {
+    avaMenu();
+})
+window.addEventListener('scroll', () => {
+    verticalMenu.style.display = 'none';
+    menuON = true;
+})
+var menuON = true;
+avatar.addEventListener('click', () => {
+    if(menuON){
+        verticalMenu.style.display = 'block';
+        menuON = false;
+    }
+    else{
+        verticalMenu.style.display = 'none';
+        menuON = true;
+    }
+})
 /*=============== CHANGE BACKGROUND HEADER ===============*/
 function scrollHeader(){
     // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
@@ -46,7 +74,6 @@ var flipCardInner = document.querySelector(".flip-card-inner");
 var angle = 180;
     flipCard.addEventListener('click', flipAction);
 function flipAction(){
-    console.log(angle);
     flipCardInner.style.transform = 'rotateX(' + angle + 'deg)';
     angle += 180;
 }
@@ -76,7 +103,10 @@ const editList = document.querySelectorAll(".editList");
 var editFlashcardStickyTitle = document.querySelector(".popup_content-sticky").querySelector("h2");
 var editFlashcardTitle = document.querySelector(".popup_content").querySelector("h1");
 var deleteTerm;
+var oldEditFlashcard;
+// var checkReload = true;
 togglebtn.addEventListener('click', () => {
+    oldEditFlashcard = "oce";
     //xoá nội dung bên trong box
     var check = document.querySelectorAll(".termDef");
     for (var i = check.length - 1; i >= 2; i--) {
@@ -115,13 +145,14 @@ togglebtn.addEventListener('click', () => {
     popupOverlay.style.display = "block";
     document.body.style.overflow = 'hidden';
 })
-
-popupClose.addEventListener('click', () =>{
+togglebtn2.addEventListener('click', () =>{
+    window.location.href = '/flashcard/favorite';
+})
+popupClose.addEventListener('click', () => {
     popupAdd.style.display = "none";
     popupOverlay.style.display = "none";
     document.body.style.overflow = 'auto';
 })
-
 // Sử dụng sự kiện 'input' để kiểm tra khi người dùng nhập vào trường input
 termInput.addEventListener('input', function() {
     if (this.value.trim() !== '') {
@@ -220,5 +251,13 @@ function scrollSticky(){
 }
 popupAdd.addEventListener('scroll', scrollSticky);
 
+//==================== RESPONSIVE BOX =========================
+var headerHeight = document.querySelector(".header").offsetHeight;
+headerHeight = headerHeight / 2 - 5;
+popupAdd.style.transform = "translate(-50%, calc(-50% + " + headerHeight + "px))";
+
+
+// ============================== USER ID ===============================
+const userid = document.querySelector(".userid").textContent;
 
 

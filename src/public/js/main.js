@@ -11,7 +11,36 @@ if(navToggle){
         navMenu.classList.add('show-menu')
     })
 }
+// ==================== NAV MENU =======================
+var headerHeight = document.querySelector(".header").offsetHeight;
+var verticalMenu = document.querySelector(".vertical-menu");
+var avatar = document.querySelector(".circle");
 
+const avaMenu = () => {
+    var containerHeaderWidth = document.querySelector(".container").offsetWidth;
+    verticalMenu.style.top = headerHeight + "px";
+    verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
+}
+avaMenu();
+window.addEventListener('resize', () => {
+    avaMenu();
+})
+window.addEventListener('scroll', () => {
+    verticalMenu.style.display = 'none';
+    menuON = true;
+})
+var menuON = true;
+avatar.addEventListener('click', () => {
+    if(menuON){
+        console.log("check");
+        verticalMenu.style.display = 'block';
+        menuON = false;
+    }
+    else{
+        verticalMenu.style.display = 'none';
+        menuON = true;
+    }
+})
 /*===== MENU HIDDEN =====*/
 /* Validate if constant exists */
 if(navClose){

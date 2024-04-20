@@ -67,11 +67,78 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background-color: transparent;
     border: none;
+}
+.left-wrap{
+    display: flex;
+    justify-content: center;
+    column-gap: 5px;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50px;
+}
+.play-wrap{
+    z-index: 2;
+}
+.left-wrap h3{
+    color: #3b3e46;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: 0.1s ease;
+}
+.left-wrap h3:hover{
+    color: rgb(127, 127, 144);
+    cursor: pointer;
+}
+.speed{
+    position: relative;
+    left: -220px;
+}
+.visible{
+    left: -220px;
+    animation: slideIn 0.2s ease-out forwards;
+}
+.invisible{
+    animation: slideOut 0.2s ease-in forwards;
+}
+
+@keyframes slideIn {
+    from {
+        left: -220px;
+        opacity: 0;
+    }
+    to {
+        left: 0;
+        opacity: 1;
+    }
+}
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        left: 0;
+    }
+    to {
+        opacity: 0;
+        left: -220px;
+    }
+}
+.activeSpeed{
+    color: blue !important;
+}
+/* .left-wrap .speed1 */
+.right-wrap{
+    display: flex;
+    justify-content: center;
+    column-gap: 5px;
+    align-items: center;
+}
+.right-wrap h3{
+    visibility: hidden;
+    margin-left: 10px;
 }
 .backEffect{
     animation: back 0.2s;
@@ -89,7 +156,14 @@ body{
     height: 100%;
     width: 0;
 }
-
+.flip-card_content-back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 80%;
+}
 
 @keyframes back {
     from {transform: translateX(-100px) rotateY(20deg)}

@@ -5,16 +5,30 @@ let notifications = document.querySelector(".notifications");
 let popupAlert = document.querySelector(".popup-box");
 let btn1 = document.querySelector(".btn1");
 let btn2 = document.querySelector(".btn2");
+
+//warning length
+var warningLength = document.querySelector(".warningLength");
 createList.forEach((item) => {
     item.addEventListener("click", create_list);
 });
 
 function create_list() {
+    if(addClass() == "errorLength"){
+        return;
+    }
+    if(tI.value.trim().length > 100){
+        warningLength.style.display = 'block';
+        return;
+    }
+    else{
+        warningLength.style.display = 'none';
+    }
     var [arrTN, arrDN] = addClass();
     const create = {
-        tI: tI.value,
+        id: userid,
+        tI: tI.value.trim(),
         tTN: arrTN,
-        tDN: arrDN,
+        tDN: arrDN
     };
     if (!tI.value || arrTN.includes("") || arrDN.includes("")) {
         alert("vui lòng nhập đủ trường đã tạo!");
@@ -49,12 +63,26 @@ var addClass = () => {
     var arrTN = [];
     for (i = 1; i <= numberList.length; i++) {
         var tTN = document.getElementById("tTN" + i);
-        arrTN.push(tTN.value);
+        if(tTN.value.trim().length > 100){
+            warningLength.style.display = 'block';
+            return "errorLength";
+        }
+        else{
+            warningLength.style.display = 'none';
+            arrTN.push(tTN.value.trim());
+        }
     }
     var arrDN = [];
     for (i = 1; i <= numberList.length; i++) {
         var tDN = document.getElementById("tDN" + i);
-        arrDN.push(tDN.value);
+        if(tDN.value.trim().length > 100){
+            warningLength.style.display = 'block';
+            return "errorLength";
+        }
+        else{
+            warningLength.style.display = 'none';
+            arrDN.push(tDN.value.trim());
+        }
     }
     return [arrTN, arrDN];
 };
@@ -97,9 +125,11 @@ const createItem = () => {
 };
 
 var deleteStorage;
+var getEditListFunc;
 const getTermData = async () => {
     // Sử dụng fetch để gửi yêu cầu GET đến API
-    await fetch("/api/flashcard-get-list")
+    console.log(userid);
+    await fetch("/api/flashcard-get-list/" + userid)
         .then((response) => {
             // Kiểm tra xem phản hồi có thành công không
             if (!response.ok) {
@@ -123,7 +153,7 @@ const getTermData = async () => {
         item.addEventListener("click", () => {
             popupAlert.style.display = 'block';
             popupOverlay.style.display = "block";
-            popupAlert.querySelector("h1").textContent = 'Xoá thẻ ghi nhớ ' + "' " + item.parentNode.parentNode.querySelector("h2").textContent + " '" + " vĩnh viễn"
+            popupAlert.querySelector("h1").textContent = 'Xoá thẻ ghi nhớ ' + "'" + item.parentNode.parentNode.querySelector("h2").textContent + "'" + " vĩnh viễn"
             document.body.style.overflow = "hidden";
             deleteStorage = item;
         });
@@ -139,107 +169,114 @@ const getTermData = async () => {
     var edit_id;
     var poppopId;
     var temp;
-    getEditFlashcard.forEach((item) => {
-        item.addEventListener("click", async () => {
-            editFlashcardTitle.textContent = "Sửa học phần";
-            editFlashcardStickyTitle.textContent = "Sửa học phần";
-            createList.forEach((y) => {
-                y.style.display = "none";
-            });
-            editList.forEach((x) => {
-                x.style.display = "block";
-            });
-            popupAdd.style.display = "block";
-            popupOverlay.style.display = "block";
-            document.body.style.overflow = "hidden";
-            popupMoreEdit.style.display = 'flex';
-            popupMore.style.display = 'none';
-            termName.style.display = 'block';
-            termTitle.style.display = "block";
-            var editId = item.parentNode.parentNode.parentNode.querySelector(".flashcard_id").textContent;
-            edit_id = editId;
-            var checkReload = tI.value == item.parentNode.parentNode.querySelector("h2").textContent ? false : true;
-            if (checkReload) {
-                var check = document.querySelectorAll(".termDef");
-                for (var i = check.length - 1; i >= 2; i--) {
-                    // Loại bỏ phần tử con khỏi khối div
-                    termDefWrap.removeChild(check[i]);
-                }
-                //biến này được sinh ra là để phục vụ popupmore edit
-                //biến ở file được load trước sẽ dùng được ở file load sau nhưng không có ngược lại 
-                var popupMore_id; 
-                var popupFlashCard_id;
-                // Lấy thông tin truyền vào form
-                await fetch("/flashcard-get-edit-list/" + editId)
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((data) => {
-                        termInput.value = data.titleName.Name;
-                        var index = 0;
-                        var index2 = 0;
-                        var index3 = 0;
-                        popupFlashCard_id = data.flashcards[data.flashcards.length - 1].Flashcard_id;
-                        document.querySelectorAll(".termDef").forEach((i) => {
-                            i.id = data.flashcards[index3].Flashcard_id;
-                            index3++;
-                        });
-                        popupMore_id = data.flashcards.length;
-                        for (i = 3; i <= popupMore_id; i++) {
-                            var cloneTermDef = termDef.cloneNode(true);
-                            cloneTermDef.querySelector(".termTN").id = "tTN" + i;
-                            cloneTermDef.querySelector(".termDN").id = "tDN" + i;
-                            cloneTermDef.querySelector(".termDef_header-content").textContent = i;
-                            cloneTermDef.id = data.flashcards[i - 1].Flashcard_id;
-                            termDefWrap.appendChild(cloneTermDef);
-                            deleteTermFunc();
-                        }
-                        var editTermTN = document.querySelectorAll(".termTN");
-                        var editTermDN = document.querySelectorAll(".termDN");
-                        editTermTN.forEach((i) => {
-                            i.value = data.flashcards[index].TermTN;
-                            index++;
-                        });
-                        editTermDN.forEach((i) => {
-                            i.value = data.flashcards[index2].TermDN;
-                            index2++;
-                        });
-                    })
-                    .catch((error) => {
-                        console.error("Đã xảy ra lỗi:", error);
-                    });
-                popupMore_id++;
-                //lý do phải gán như vậy vì updatenumber2 cần dùng lại popupFlashcard_id
-                var popupId = popupFlashCard_id + 1;
-                poppopId = popupFlashCard_id;
-                popupMoreEdit.addEventListener('click', () => {
-                    var cloneTermDef = termDef.cloneNode(true);
-                    if(!popupMoreEdit_id){
-                        cloneTermDef.querySelector(".termDef_header-content").textContent = popupMore_id;
-                        cloneTermDef.id = popupId;
+    var checkReload;
+    const getEditFunc = () => {
+        getEditFlashcard.forEach((item) => {
+            item.addEventListener("click", async () => {
+                editFlashcardTitle.textContent = "Sửa học phần";
+                editFlashcardStickyTitle.textContent = "Sửa học phần";
+                createList.forEach((y) => {
+                    y.style.display = "none";
+                });
+                editList.forEach((x) => {
+                    x.style.display = "block";
+                });
+                popupAdd.style.display = "block";
+                popupOverlay.style.display = "block";
+                document.body.style.overflow = "hidden";
+                popupMoreEdit.style.display = 'flex';
+                popupMore.style.display = 'none';
+                termName.style.display = 'block';
+                termTitle.style.display = "block";
+                var editId = item.parentNode.parentNode.parentNode.querySelector(".flashcard_id").textContent;
+                edit_id = editId;
+                checkReload = item.parentNode.parentNode.querySelector("h2").textContent == oldEditFlashcard ? false : true;
+                oldEditFlashcard = item.parentNode.parentNode.querySelector("h2").textContent;
+                if (checkReload) {
+                    console.log("check");
+                    checkReload = false;
+                    var check = document.querySelectorAll(".termDef");
+                    for (var i = check.length - 1; i >= 2; i--) {
+                        // Loại bỏ phần tử con khỏi khối div
+                        termDefWrap.removeChild(check[i]);
                     }
-                    else{
-                        updateNumber2();
-                        // popupId -= (popupMore_id - popupMoreEdit_id);
-                        popupId = temp;
-                        popupMore_id = popupMoreEdit_id;
-                        cloneTermDef.querySelector(".termDef_header-content").textContent = popupMore_id;
-                        cloneTermDef.id = popupId;
-                        popupMoreEdit_id = undefined;
-                    }
-                    cloneTermDef.querySelector(".termTN").id = "tTN" + popupMore_id;
-                    cloneTermDef.querySelector(".termTN").value = "";
-                    cloneTermDef.querySelector(".termDN").id = "tDN" + popupMore_id;
-                    cloneTermDef.querySelector(".termDN").value = "";
-                    termDefWrap.appendChild(cloneTermDef);
+                    //biến này được sinh ra là để phục vụ popupmore edit
+                    //biến ở file được load trước sẽ dùng được ở file load sau nhưng không có ngược lại 
+                    var popupMore_id; 
+                    var popupFlashCard_id;
+                    // Lấy thông tin truyền vào form
+                    await fetch("/flashcard-get-edit-list/" + userid + "/" + editId)
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            termInput.value = data.titleName.Name;
+                            var index = 0;
+                            var index2 = 0;
+                            var index3 = 0;
+                            popupFlashCard_id = data.flashcards[data.flashcards.length - 1].Flashcard_id;
+                            document.querySelectorAll(".termDef").forEach((i) => {
+                                i.id = data.flashcards[index3].Flashcard_id;
+                                index3++;
+                            });
+                            popupMore_id = data.flashcards.length;
+                            for (i = 3; i <= popupMore_id; i++) {
+                                var cloneTermDef = termDef.cloneNode(true);
+                                cloneTermDef.querySelector(".termTN").id = "tTN" + i;
+                                cloneTermDef.querySelector(".termDN").id = "tDN" + i;
+                                cloneTermDef.querySelector(".termDef_header-content").textContent = i;
+                                cloneTermDef.id = data.flashcards[i - 1].Flashcard_id;
+                                termDefWrap.appendChild(cloneTermDef);
+                                deleteTermFunc();
+                            }
+                            var editTermTN = document.querySelectorAll(".termTN");
+                            var editTermDN = document.querySelectorAll(".termDN");
+                            editTermTN.forEach((i) => {
+                                i.value = data.flashcards[index].TermTN;
+                                index++;
+                            });
+                            editTermDN.forEach((i) => {
+                                i.value = data.flashcards[index2].TermDN;
+                                index2++;
+                            });
+                        })
+                        .catch((error) => {
+                            console.error("Đã xảy ra lỗi:", error);
+                        });
                     popupMore_id++;
-                    popupId++;
-                    popupAdd.scrollTop = popupAdd.scrollHeight;
-                    deleteTermFunc();
-                })
-            }
+                    //lý do phải gán như vậy vì updatenumber2 cần dùng lại popupFlashcard_id
+                    var popupId = popupFlashCard_id + 1;
+                    poppopId = popupFlashCard_id;
+                    popupMoreEdit.addEventListener('click', () => {
+                        var cloneTermDef = termDef.cloneNode(true);
+                        if(!popupMoreEdit_id){
+                            cloneTermDef.querySelector(".termDef_header-content").textContent = popupMore_id;
+                            cloneTermDef.id = popupId;
+                        }
+                        else{
+                            updateNumber2();
+                            // popupId -= (popupMore_id - popupMoreEdit_id);
+                            popupId = temp;
+                            popupMore_id = popupMoreEdit_id;
+                            cloneTermDef.querySelector(".termDef_header-content").textContent = popupMore_id;
+                            cloneTermDef.id = popupId;
+                            popupMoreEdit_id = undefined;
+                        }
+                        cloneTermDef.querySelector(".termTN").id = "tTN" + popupMore_id;
+                        cloneTermDef.querySelector(".termTN").value = "";
+                        cloneTermDef.querySelector(".termDN").id = "tDN" + popupMore_id;
+                        cloneTermDef.querySelector(".termDN").value = "";
+                        termDefWrap.appendChild(cloneTermDef);
+                        popupMore_id++;
+                        popupId++;
+                        popupAdd.scrollTop = popupAdd.scrollHeight;
+                        deleteTermFunc();
+                    })
+                }
+            });
         });
-    });
+    }
+    getEditFunc();
     const updateNumber2 = () => {
         temp = poppopId + 1;
         document.querySelectorAll(".termDef").forEach((i) => {
@@ -250,54 +287,68 @@ const getTermData = async () => {
         })
     }
     //============================== EDIT FLASHCARD ================================
+    function editListFunc(){
+        checkReload = true;
+        //check length
+        if(addClass() == "errorLength"){
+            return;
+        }
+        if(tI.value.trim().length > 100){
+            warningLength.style.display = 'block';
+            return;
+        }
+        else{
+            warningLength.style.display = 'none';
+        }
+        updateNumber2();
+        var check2 = document.querySelectorAll(".termDef");
+        var flashcardId = [];
+        check2.forEach((i) => {
+            flashcardId.push(i.id);
+        })
+        var [arrTN, arrDN] = addClass();
+        const paramId = {
+            id: userid,
+            flashcardId: flashcardId,
+            editId: edit_id,
+            name: tI.value.trim(),
+            tTN: arrTN,
+            tDN: arrDN,
+        };
+        if (!tI.value || arrTN.includes("") || arrDN.includes("")) {
+            alert("vui lòng nhập đủ trường đã tạo!");
+            return;
+        }
+        fetch("/flashcard-Edit-list", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(paramId),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Có lỗi xảy ra");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Xử lý dữ liệu nhận được sau khi chỉnh sửa
+                let text = data.message;
+                if (data.status == "error") {
+                    error(text);
+                } else {
+                    success(text);
+                }
+            })
+            .catch((error) => {
+                console.error("Đã xảy ra lỗi:", error);
+            });
+    }
+    getEditListFunc = editListFunc;
     editList.forEach((i2) => {
-        i2.addEventListener("click", () => {
-            updateNumber2();
-            var check2 = document.querySelectorAll(".termDef");
-            var flashcardId = [];
-            check2.forEach((i) => {
-                flashcardId.push(i.id);
-            })
-            var [arrTN, arrDN] = addClass();
-            const paramId = {
-                flashcardId: flashcardId,
-                editId: edit_id,
-                name: tI.value,
-                tTN: arrTN,
-                tDN: arrDN,
-            };
-            if (!tI.value || arrTN.includes("") || arrDN.includes("")) {
-                alert("vui lòng nhập đủ trường đã tạo!");
-                return;
-            }
-            fetch("/flashcard-Edit-list", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(paramId),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Có lỗi xảy ra");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    // Xử lý dữ liệu nhận được sau khi chỉnh sửa
-                    let text = data.message;
-                    if (data.status == "error") {
-                        error(text);
-                    } else {
-                        success(text);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Đã xảy ra lỗi:", error);
-                });
-        });
+        i2.addEventListener("click", getEditListFunc);
     });
-
     document.querySelectorAll(".flashcard_list--item").forEach((item) => {
         item.addEventListener('click', () => {
             if (event.target.classList.contains("edit") || event.target.classList.contains("trash")){
@@ -309,6 +360,7 @@ const getTermData = async () => {
 };
 const deleteFunc = async (item) => {
     const deleteObject = {
+        id: userid,
         deleteId: item.parentNode.parentNode.parentNode.querySelector(".flashcard_id").textContent,
     };
     // Gửi yêu cầu DELETE
@@ -338,7 +390,11 @@ const deleteFunc = async (item) => {
         });
         return true;
 }
-
+const removeEditListener = () => {
+    editList.forEach((i) => {
+        i.removeEventListener("click", getEditListFunc);
+    })
+}
 btn2.addEventListener('click', () => {
     let checkDelete = deleteFunc(deleteStorage);
     if(checkDelete){
@@ -357,18 +413,31 @@ btn1.addEventListener('click', () => {
 })
 
 const getFlashCardData = (data) => {
+    var UrlCurrent = window.location.href;
+    var flashcardList = document.querySelector(".flashcard_list");
     for (i = 0; i < data.length; i++) {
+        if(!isNaN(parseInt(UrlCurrent.charAt(UrlCurrent.length - 1)))){
+            if(data[i].Title_Id == modifiedString) continue;
+        }
         var [flashcardId, flashcardListTitle, flashcardTotal, flashcardListTime] = createItem();
         flashcardId.textContent = data[i].Title_Id;
         flashcardListTitle.textContent = data[i].Name;
         flashcardTotal.textContent = data[i].TotalItem + " thuật ngữ";
         flashcardListTime.textContent = "Được tạo lúc: " + data[i].formated_time;
     }
+    var checkFlashCard = document.querySelector(".flashcard_list--item");
+    if(!checkFlashCard){
+        flashcardList.querySelector("h1").style.display = 'none';
+    }
+    else{
+        flashcardList.querySelector("h1").style.display = 'block';
+    }
 };
 const deleteFlashCardData = () => {
     document.querySelectorAll(".flashcard_list--item").forEach((i) => {
         i.remove();
     })
+    removeEditListener();
 };
 getTermData();
 

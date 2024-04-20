@@ -16,7 +16,7 @@ var box = document.querySelector('.box1');
 var box1 = document.querySelector('.box2');
 var sidebar = document.querySelector('.sidebar1');
 var sidebar1 = document.querySelector('.sidebar2');
-
+var userid = document.querySelector(".userid").textContent;
 
 
 
@@ -53,17 +53,49 @@ function linkAction(){
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
 
+// ==================== NAV MENU =======================
+var headerHeight = document.querySelector(".header").offsetHeight;
+var verticalMenu = document.querySelector(".vertical-menu");
+var avatar = document.querySelector(".circle");
+
+const avaMenu = () => {
+    var containerHeaderWidth = document.querySelector(".container").offsetWidth;
+    verticalMenu.style.top = headerHeight + "px";
+    verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
+}
+avaMenu();
+window.addEventListener('resize', () => {
+    avaMenu();
+})
+window.addEventListener('scroll', () => {
+    verticalMenu.style.display = 'none';
+    menuON = true;
+})
+var menuON = true;
+avatar.addEventListener('click', () => {
+    if(menuON){
+        console.log("check");
+        verticalMenu.style.display = 'block';
+        menuON = false;
+    }
+    else{
+        verticalMenu.style.display = 'none';
+        menuON = true;
+    }
+})
+
 /*=============== CHANGE BACKGROUND HEADER ===============*/
 function scrollHeader(){
     // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
     if(this.scrollY >= 50) header.classList.add('scroll-header'); else header.classList.remove('scroll-header')
 }
 window.addEventListener('scroll', scrollHeader)
+scrollHeader();
 
 // ==================== Translate =================================
 selectTag.forEach((tag, id) => {
     for (let country_code in countries) {
-        let selected = id == 0 ? country_code == "en-GB" ? "selected" : "" : country_code == "vi-VN" ? "selected" : "";
+        let selected = id == 0 || id == 2 ? country_code == "en-GB" ? "selected" : "" : country_code == "vi-VN" ? "selected" : "";
         let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
         tag.insertAdjacentHTML("beforeend", option);
     }
@@ -161,6 +193,7 @@ translateApi = async () => {
     //history translate
     if(toText.value){
         let data = {
+            id: userid,
             translateFrom: fromText.value.trim(),
             translateToText: toText.value,
             languageFrom: countries[selectTag[0].value],
@@ -322,15 +355,33 @@ window.addEventListener('resize', () => {
     sidebarHeight();
 })
 sidebarHeight();
-const closeSidebar = document.querySelector(".close_sidebar");
-closeSidebar.addEventListener('click', () => {
-    if(window.innerWidth > 576){
-        sidebar.style.width = '0';
+var sidebarBox = document.querySelectorAll('.sidebar');
+var closeSidebar = document.querySelectorAll(".close_sidebar");
+closeSidebar.forEach((item) => {
+    item.addEventListener('click', () => {
+        if(window.innerWidth > 576){
+            sidebar.style.width = '0';
+            sidebar1.style.width = '0';
+        }
+        else{
+            sidebar.style.display = 'none';
+            sidebar1.style.display = 'none';
+        }
+    })
+})
+
+//kiểm tra xem nếu resize màn hình thì display none
+window.addEventListener('resize', () => {
+    if(window.innerWidth <= 576){
+        sidebar.style.display = 'none';
+        sidebar2.style.display = 'none';
     }
     else{
-        sidebar.style.display = 'none';
+        sidebar.style.display = 'block';
+        sidebar2.style.display = 'block';
     }
 })
+
 var sidebarWidth = '350px';
 //hiệu ứng đóng mở sidebar
 //history button
@@ -344,8 +395,10 @@ togglebtn.addEventListener('click', () => {
     }
     mask(sidebar.style.width);
     if(sidebar.style.width === sidebarWidth || sidebar.style.display === 'block'){
-        header.classList.add('scroll-header');
-        window.removeEventListener('scroll', scrollHeader);
+        if(window.innerWidth > 576){
+            header.classList.add('scroll-header');
+            window.removeEventListener('scroll', scrollHeader);
+        }
         productListContainer.innerHTML = '';
         ListData();
     }
@@ -358,11 +411,19 @@ togglebtn.addEventListener('click', () => {
 
 //favorite button
 togglebtn2.addEventListener('click', () => {
-    sidebar1.style.width = sidebar1.style.width === sidebarWidth ? '0' : sidebarWidth;
+    if(window.innerWidth > 576){
+        sidebar1.style.display = 'block';
+        sidebar1.style.width = sidebar1.style.width === sidebarWidth ? '0' : sidebarWidth;
+    }
+    else{
+        sidebar1.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+    }
     mask(sidebar1.style.width);
-    if(sidebar1.style.width === sidebarWidth){
-        window.removeEventListener('scroll', scrollHeader);
-        header.classList.add('scroll-header');
+    if(sidebar1.style.width === sidebarWidth || sidebar1.style.display === 'block'){
+        if(window.innerWidth > 576){
+            header.classList.add('scroll-header');
+            window.removeEventListener('scroll', scrollHeader);
+        }
         productListContainerFavor.innerHTML = '';
         favoriteData();
     }
@@ -406,7 +467,7 @@ window.addEventListener('offline', () => {
 
 //lấy ra các từ đã dịch từ server
 const ListData = () => {
-    const api = "/api/translate-list";
+    const api = "/api/translate-list/" + userid;
     // Sử dụng fetch để lấy dữ liệu từ API
     fetch(api)
     .then(response => {
@@ -429,7 +490,7 @@ const ListData = () => {
 
 //lấy ra dữ liệu yêu thích từ server
 const favoriteData = ()  => {
-    const favorapi = '/api/translate-favorite-list'
+    const favorapi = '/api/translate-favorite-list/' + userid;
     fetch(favorapi)
     .then(response => {
     // Kiểm tra xem yêu cầu có thành công không (status code 200)
@@ -691,6 +752,7 @@ const itemFavor = (data) => {
 // cập nhật Favorite Id
 const updateKey = (check, id) => {
     let data = {
+        userid: userid,
         check: check,
         id: id
     }
@@ -714,6 +776,7 @@ const updateKey = (check, id) => {
 // cập nhật Favorite Id
 const deleteKey = (productId) => {
     let data = {
+        userid: userid, 
         id: productId
     }
     fetch("/api/translate-delete-key", {
@@ -736,6 +799,7 @@ const deleteKey = (productId) => {
 //xoá từ yêu thích
 const deleteFavorKey = (favorId, hisId) => {
     let data = {
+        id: userid,
         favorId: favorId, 
         hisId: hisId
     }

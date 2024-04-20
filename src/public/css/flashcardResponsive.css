@@ -16,7 +16,7 @@
         max-width: 720px;
     }
     .container{
-        max-width: 820px;
+        max-width: 767px;
         margin: 0 auto;
     }
 
@@ -35,7 +35,7 @@
         padding-bottom: 14px;
     }
     .term_container{
-        padding: 0;
+        padding: 15px 0;
     }
     .flashcard_list{
         margin-bottom: 70px;
@@ -56,7 +56,7 @@
     /* container */
     .wrap_content{
         max-width: 520px;
-        margin-top: 90px;
+        margin-top: 120px;
     }
     .container{
         max-width: 567px;
@@ -85,7 +85,7 @@
     }
     /* danh sách học phần */
     .term_container{
-        padding: 0;
+        padding: 10px 0;
         margin-top: 20px;
     }
     /* tiêu đề */
@@ -113,19 +113,30 @@
     .beside-controller{
         font-size: 25px;
     }
+    .speed{
+        font-size: x-small;
+        margin-right: 1px !important;
+    }
+    .right-wrap h3{
+        font-size: x-small;
+        margin-left: 1px !important;
+    }
     .play-wrap, .shuffle-wrap{
         width: 45px;
         height: 45px;
     }
     .controller{
-        font-size: 35px;
+        font-size: 20px;
     }
     .back-wrap, .next-wrap{
-        width: 55px;
-        height: 55px;
+        width: 35px;
+        height: 35px;
     }
     .progress-text{
         font-size: 20px;
+    }
+    .center-wrap{
+        width: 220px;
     }
 }
 @media screen and (max-width: 576px){
@@ -135,7 +146,8 @@
     }
     .wrap_content{
         max-width: 320px;
-        margin-top: 70px;
+        margin-top: 180px;
+        margin-bottom: 200px;
     }
     .container{
         max-width: 420px;
@@ -165,11 +177,11 @@
         font-size: 0.5rem;
     }
     .dateModified{
-        margin-top: 20px;
+        margin-top: 10px;
         font-size: x-small;
     }
     .term_container{
-        padding: 0;
+        padding: 10px 0;
         margin-top: 20px;
     }
     .titleName h2{
@@ -197,21 +209,27 @@
         font-size: 20px;
     }
     .play-wrap, .shuffle-wrap{
-        width: 20px;
-        height: 20px;
+        width: 25px;
+        height: 25px;
     }
     .center-wrap{
-        width: 200px;
+        width: 150px;
     }
     .controller{
-        font-size: 25px;
+        font-size: 15px;
     }
     .back-wrap, .next-wrap{
-        width: 35px;
-        height: 35px;
+        width: 7px;
+        height: 7px;
     }
     .progress-text{
-        font-size: 20px;
+        font-size: 15px;
+    }
+    .left-wrap h3{
+        display: none;
+    }
+    .right-wrap h3{
+        display: none;
     }
 }
 @media screen and (max-width: 320px){
@@ -221,7 +239,7 @@
     }
     .wrap_content{
         max-width: 180px;
-        margin-top: 50px;
+        margin-top: 200px;
     }
     .container{
         max-width: 220px;
@@ -232,8 +250,8 @@
         height: 25px;
     }
     .flashcard_list{
-        margin-top: 25px;
-        margin-bottom: 25px;
+        margin-top: 45px;
+        margin-bottom: 45px;
     }
     .flashcard_list h1{
         font-size: 1rem;
@@ -251,15 +269,23 @@
         font-size: x-small;
         margin-right: 3px;
     }
+    .flashcard_boxIcon {
+        display: flex;
+        align-items: center;
+    }
+    .flashcard_boxTitle h2{
+        height: 15px;
+    }
     .termNum{
         margin: 0.5rem 0;
         font-size: 0.5rem;
     }
     .dateModified{
+        margin: 0;
         display: none;
     }
     .term_container{
-        padding: 0;
+        padding: 10px 0;
         margin-top: 20px;
     }
     .titleName h2{
