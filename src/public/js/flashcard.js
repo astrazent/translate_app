@@ -31,17 +31,19 @@ function linkAction(){
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
 // ==================== NAV MENU =======================
-var headerHeight = document.querySelector(".header").offsetHeight;
 var verticalMenu = document.querySelector(".vertical-menu");
 var avatar = document.querySelector(".circle");
 
 const avaMenu = () => {
+    var headerHeight = document.querySelector(".header").offsetHeight;
     var containerHeaderWidth = document.querySelector(".container").offsetWidth;
     verticalMenu.style.top = headerHeight + "px";
+    console.log("header:" + headerHeight);
     verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
 }
 avaMenu();
 window.addEventListener('resize', () => {
+    console.log("check");
     avaMenu();
 })
 window.addEventListener('scroll', () => {

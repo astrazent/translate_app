@@ -16,31 +16,33 @@ var headerHeight = document.querySelector(".header").offsetHeight;
 var verticalMenu = document.querySelector(".vertical-menu");
 var avatar = document.querySelector(".circle");
 
-const avaMenu = () => {
-    var containerHeaderWidth = document.querySelector(".container").offsetWidth;
-    verticalMenu.style.top = headerHeight + "px";
-    verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
-}
-avaMenu();
-window.addEventListener('resize', () => {
-    avaMenu();
-})
-window.addEventListener('scroll', () => {
-    verticalMenu.style.display = 'none';
-    menuON = true;
-})
-var menuON = true;
-avatar.addEventListener('click', () => {
-    if(menuON){
-        console.log("check");
-        verticalMenu.style.display = 'block';
-        menuON = false;
+if(verticalMenu){
+    const avaMenu = () => {
+        var containerHeaderWidth = document.querySelector(".container").offsetWidth;
+        verticalMenu.style.top = headerHeight + "px";
+        verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
     }
-    else{
+    avaMenu();
+    window.addEventListener('resize', () => {
+        avaMenu();
+    })
+    window.addEventListener('scroll', () => {
         verticalMenu.style.display = 'none';
         menuON = true;
-    }
-})
+    })
+    var menuON = true;
+    avatar.addEventListener('click', () => {
+        if(menuON){
+            console.log("check");
+            verticalMenu.style.display = 'block';
+            menuON = false;
+        }
+        else{
+            verticalMenu.style.display = 'none';
+            menuON = true;
+        }
+    })
+}
 /*===== MENU HIDDEN =====*/
 /* Validate if constant exists */
 if(navClose){
@@ -172,7 +174,9 @@ if (isIOSChrome) {
     // is Google Chrome on IOS
     var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     if(width < 576){
-        alert("nếu bạn đang dùng chrome trên iphone, xin hãy đổi sang trình duyệt safari để có được trải nghiệm tốt nhất")
+        setTimeout(() => {
+            alert("nếu bạn đang dùng chrome trên iphone, xin hãy đổi sang trình duyệt safari để có được trải nghiệm tốt nhất")
+        }, 5000)
     }
 } else if(
     isChromium !== null &&
@@ -268,7 +272,6 @@ var loop = setInterval(function() {
 
     setTimeout(() =>{
         changeAnimation.textContent = animation_text[index2];
-        console.log(animation_text[index2]);
         changeAnimation.style.opacity = "1";
         index2++;
     }, 200);

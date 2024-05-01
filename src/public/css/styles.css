@@ -188,7 +188,7 @@ button{
   width: 50px;
   height: 50px;
   cursor: url(../stuff/pointer.svg), auto;
-  background-color: #f00; /* Màu nền */
+  background-color: transparent; /* Màu nền */
   border-radius: 50%; /* Đảm bảo nó là một hình tròn */
   overflow: hidden; /* Ẩn nội dung vượt ra ngoài */
   display: flex; /* Sử dụng flexbox */
@@ -370,6 +370,7 @@ video{
 .nav__toggle{
   font-size: 1.25rem;
   color: #3c87c9;
+  width: 40px;
   cursor: pointer;
   order: -1;
 }

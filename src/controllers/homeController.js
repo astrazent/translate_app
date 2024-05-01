@@ -166,8 +166,8 @@ const translateHistory = async (req, res) => {
     let {id, translateFrom, translateToText, languageFrom, languageTo} = req.body;
     const [results, fields] = await connection.query(
         `INSERT INTO 
-        TranslateHistory_` + id + ` (FavoriteId, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo) 
-        VALUES (?, ?, ?, ?, ?)`, ['0', languageFrom, languageTo, translateFrom, translateToText]
+        TranslateHistory_` + id + ` (FavoriteId, ID, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo) 
+        VALUES (?, ?, ?, ?, ?, ?)`, ['0', id, languageFrom, languageTo, translateFrom, translateToText]
         );
         return res.json({status: 'success', message: 'Save success'})  
 }
@@ -183,8 +183,8 @@ const translateUpdateKey = async (req, res) => {
     let {userid, check, id} = req.body
     if(check){
         //cập nhật trạng thái favorite của từ
-        await connection.query(`INSERT INTO TranslateFavorite_` + userid + ` (History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo)
-        SELECT History_id, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo
+        await connection.query(`INSERT INTO TranslateFavorite_` + userid + ` (History_id, ID, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo)
+        SELECT History_id, ID, LanguageFrom, LanguageTo, TranslateFrom, TranslateTo
         FROM TranslateHistory_` + userid +
         ` WHERE History_id = ?`, [id])
         await connection.query(`UPDATE TranslateHistory_` + userid + ` SET FavoriteId  = '1' WHERE History_id = ?`, [id])
@@ -239,16 +239,19 @@ const createFlashCard = async (req, res) => {
     if(!rslt[0]) return res.json({status: "error", message: "Get title id Failed"});
 
     // tạo bảng flashcard
-    console.log(rslt);
     var titleId = rslt[0].Title_Id;
     var flashcard_Table = "FlashCards_" + id + "_" + titleId;
     const [result_create, fields_create] = await connection.query(`
     CREATE TABLE `+ flashcard_Table + ` (
         Flashcard_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         Title_Id INT,
+        ID INT,
         TermTN VARCHAR(255) NOT NULL,
         TermDN VARCHAR(255) NOT NULL,
         FOREIGN KEY (Title_Id) REFERENCES FlashCardTitle_` + id + ` (Title_Id)
+        ON UPDATE SET NULL
+        ON DELETE SET NULL,
+        FOREIGN KEY (ID) REFERENCES Users(ID)
         ON UPDATE SET NULL
         ON DELETE SET NULL
     );`);
@@ -256,10 +259,10 @@ const createFlashCard = async (req, res) => {
 
     //add từ vựng vào flashcard
     const createSql = (tTN, tDN) => {
-        var sql = 'INSERT INTO ' + flashcard_Table + ' (Title_Id, TermTN, TermDN) VALUES ';
+        var sql = 'INSERT INTO ' + flashcard_Table + ' (Title_Id, ID, TermTN, TermDN) VALUES ';
         //lấy ra title id
         for(i = 0; i < tTN.length; i++){
-            sql += '(' + '"' + titleId + '"' + ', ' + '"' + tTN[i] + '"' + ', ' + '"' + tDN[i] + '"' + ')'
+            sql += '(' + '"' + titleId + '"' + ', ' + '"' + id + '"' + ', ' + '"' + tTN[i] + '"' + ', ' + '"' + tDN[i] + '"' + ')'
             if(i != tTN.length - 1) sql += ', '
         }
         return sql;
@@ -273,7 +276,6 @@ const createFlashCard = async (req, res) => {
 
 const getFlashCardList = async (req, res) => {
     let {id} = req.params;
-    console.log("check");
     const [results, fields] = await connection.query(`
     SELECT *,
     DATE_FORMAT(TitleDate, '%d-%m-%y %H:%i:%s') AS formated_time
@@ -303,20 +305,20 @@ const getEditFlashcard = async (req, res) => {
 }
 const EditFlashcard = async (req, res) => {
     let {id, flashcardId, editId, name, tTN, tDN} = req.body;
-    console.log(editId);
     //sửa tiêu đề
     const [results, fields] = await connection.query(`UPDATE FlashCardTitle_` + id + ` SET Name = ?, TotalItem = ?, TitleDate = ? WHERE Title_Id = ?;`, [name, tTN.length, dateNow(), editId]);
     if(!results.affectedRows) return res.json({status: "error", message: "Edit flashcard title Failed"});
 
     // add từ vựng vào flashcard
     const editSql = (editId, tTN, tDN) => {
-        var sql = `INSERT INTO FlashCards_` + id + `_` + editId + ` (FlashCard_id, Title_Id, TermTN, TermDN) VALUES `;
+        var sql = `INSERT INTO FlashCards_` + id + `_` + editId + ` (FlashCard_id, ID, Title_Id, TermTN, TermDN) VALUES `;
         //lấy ra title id
         for(i = 0; i < tTN.length; i++){
-            sql += "(" + flashcardId[i] + ', ' + editId + ', ' + '"' + tTN[i] + '"' + ', ' + '"' + tDN[i] + '")';
+            sql += "(" + flashcardId[i] + ', ' + id + ', ' + editId + ', ' + '"' + tTN[i] + '"' + ', ' + '"' + tDN[i] + '")';
             if(i != tTN.length - 1) sql += ', '
         }
         sql += ` ON DUPLICATE KEY UPDATE Flashcard_id = VALUES (Flashcard_id),
+        ID = VALUES (ID),
         Title_Id = VALUES (Title_Id),
         TermTN = VALUES (TermTN), TermDN = VALUES (TermDN)`
         return sql;
@@ -347,12 +349,10 @@ const flashcardPageDetail = async (req, res) => {
 const getFlashcard = async (req, res) => {
     let {userid, id} = req.params;
     if(id == 'favorite'){
-        console.log(userid, id);
         let [resultsfav, fieldsfav] = await connection.query(`SELECT * FROM TranslateFavorite_` + userid);
         if(!resultsfav[0]) return res.json({status: "error", message: "No favorite word"});
         return res.json({titleName: -1, resultsfav})
     }
-    console.log("check");
     if(isNaN(id)){
         return;
     }
@@ -362,8 +362,6 @@ const getFlashcard = async (req, res) => {
 
     //lấy dữ liệu 
     const [rslts, flds] = await connection.query(`SELECT * FROM FlashCards_` + userid + `_` + id);
-    console.log(results);
-    console.log(rslts);
     if(!rslts[0]) return res.json({status: "error", message: "Add flashcard List Failed"});
     return res.json({titleName: results[0], flashcards: rslts});
 }

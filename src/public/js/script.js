@@ -133,10 +133,17 @@ fromText.addEventListener("keydown", async (event) => {
 
 //sự kiện delete text
 var textBox = document.querySelector(".text-box");
+var exchangeLang = document.querySelector(".exchangeLang");
 var width_box = textBox.offsetWidth;
 var product = document.createElement("i");
 width_box = textBox.offsetWidth;
 product.style.left = (width_box / 2 - 40).toString() + 'px';
+if(window.innerWidth < 767){
+    product.style.top = (exchangeLang.offsetHeight + 20).toString() + 'px';
+}
+else{
+    product.style.top = '20px';
+}
 product.classList.add("fa-solid", "text-box-close", "fa-xmark", "fa-xl");
 product.style.display = "none";
 textBox.appendChild(product);
@@ -144,9 +151,12 @@ textBox.appendChild(product);
 window.addEventListener('resize', function(event) {
     width_box = textBox.offsetWidth;
     product.style.left = (width_box / 2 - 40).toString() + 'px';
-    // if(window.innerWidth < 576){
-    //     product.style.left = (width_box / 2 - 40).toString() + 'px';
-    // }
+    if(window.innerWidth < 767){
+        product.style.top = (exchangeLang.offsetHeight + 20).toString() + 'px';
+    }
+    else{
+        product.style.top = '20px';
+    }
 });
 
 fromText.addEventListener('keydown', () => {
@@ -255,8 +265,6 @@ recognition.addEventListener('result', (e) => {
             transcript = transcript.slice(0, set + 2) + transcript.charAt(set + 2).toUpperCase() + transcript.slice(set + 3);
         }
     }
-    
-
     if(e.results[0].isFinal){
         // viết hoa chữ dầu câu sau dấu chấm đó (trường hợp "dấu chấm" đầu câu)
         if(dot == 3){
@@ -364,6 +372,8 @@ closeSidebar.forEach((item) => {
             sidebar1.style.width = '0';
         }
         else{
+            scrollHeader();
+            document.querySelector("body").style.overflow = "auto";
             sidebar.style.display = 'none';
             sidebar1.style.display = 'none';
         }
@@ -391,6 +401,8 @@ togglebtn.addEventListener('click', () => {
         sidebar.style.width = sidebar.style.width === sidebarWidth ? '0' : sidebarWidth;
     }
     else{
+        header.classList.add('scroll-header');
+        document.querySelector("body").style.overflow = "hidden";
         sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
     }
     mask(sidebar.style.width);
@@ -416,6 +428,8 @@ togglebtn2.addEventListener('click', () => {
         sidebar1.style.width = sidebar1.style.width === sidebarWidth ? '0' : sidebarWidth;
     }
     else{
+        header.classList.add('scroll-header');
+        document.querySelector("body").style.overflow = "hidden";
         sidebar1.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
     }
     mask(sidebar1.style.width);
