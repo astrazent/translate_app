@@ -38,7 +38,6 @@ const avaMenu = () => {
     var headerHeight = document.querySelector(".header").offsetHeight;
     var containerHeaderWidth = document.querySelector(".container").offsetWidth;
     verticalMenu.style.top = headerHeight + "px";
-    console.log("header:" + headerHeight);
     verticalMenu.style.right = (window.innerWidth - containerHeaderWidth) / 2 + "px";
 }
 avaMenu();

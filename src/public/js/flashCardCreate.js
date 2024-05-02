@@ -128,7 +128,6 @@ var deleteStorage;
 var getEditListFunc;
 const getTermData = async () => {
     // Sử dụng fetch để gửi yêu cầu GET đến API
-    console.log(userid);
     await fetch("/api/flashcard-get-list/" + userid)
         .then((response) => {
             // Kiểm tra xem phản hồi có thành công không
@@ -193,7 +192,6 @@ const getTermData = async () => {
                 checkReload = item.parentNode.parentNode.querySelector("h2").textContent == oldEditFlashcard ? false : true;
                 oldEditFlashcard = item.parentNode.parentNode.querySelector("h2").textContent;
                 if (checkReload) {
-                    console.log("check");
                     checkReload = false;
                     var check = document.querySelectorAll(".termDef");
                     for (var i = check.length - 1; i >= 2; i--) {

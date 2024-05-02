@@ -30,6 +30,7 @@ body{
   min-height: 100vh;
   position: relative;
   background: linear-gradient(109.6deg, rgba(156, 252, 248, 1), rgba(110, 123, 251, 1));
+  background-color: #131417;
   background-size: cover;
   background-repeat: no-repeat;
   color: var(--text-color)

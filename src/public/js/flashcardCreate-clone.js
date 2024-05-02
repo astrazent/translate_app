@@ -129,7 +129,6 @@ const getTermData = async () => {
         });
     });
     btn2.addEventListener('click', () => {
-        console.log("check");
         let checkDelete = deleteFunc(deleteStorage);
         if(checkDelete){
             popupAlert.style.display = 'none';

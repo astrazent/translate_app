@@ -13,3 +13,5 @@ CMD [ "npm", "run", "start"]
 # docker run -p 8080:8080 -d translate-app
 #docker stop <id>
 #docker rename abc_xyz infinty_translate
+
+#docker stop $(docker ps -a -q)

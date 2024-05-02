@@ -66,14 +66,17 @@ const synchronousFunc = async (modifiedString) => {
     progressText.textContent = halfLength + "/" + (length + 1);
     flipCardTN.textContent = arrWordTN[halfLength - 1];
     flipCardDN.textContent = arrWordDN[halfLength - 1];
+    var playCheck = true;
+    var nextAction = false;
     backBtn.addEventListener("click", () => {
         backFunc();
     });
     nextBtn.addEventListener("click", () => {
+        nextAction = true;
         nextFunc();
+        nextAction = false;
     });
 
-    var playCheck = true;
     //thêm notification
     var activeControllerFront = document.querySelector(".activeControllerFront");
     var activeControllerBack = document.querySelector(".activeControllerBack");
@@ -148,12 +151,13 @@ const synchronousFunc = async (modifiedString) => {
     });
     const checkPause = () => {
         if (playCheck) {
+            console.log("checkplay");
             flipCardInner.style.transform = "rotateX(" + angle + "deg)";
             angle += 180;
         }
     };
     const nextFunc = () => {
-        if(playCheck){
+        if(playCheck || nextAction){
             //reset lại hiệu ứng rotate
             flipCardInner.style.transform = "none";
             angle = 180;
